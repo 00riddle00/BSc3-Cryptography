@@ -61,14 +61,14 @@ def bf_Ceasar_1():
     for l1 in range(1, 64, 2):
         l2 = (4 - 18*l1) % 64
         print("l1={}  | l2={}".format(l1,l2))
-        print Ceasar(abcd,sifr2, l1, l2)    
-        
+        print(Ceasar(abcd,sifr2, l1, l2))
+
 
 def bf_Ceasar_2():
     for l1 in range(1, 32, 2):
         for l2 in range(32):
             print("l1={}  | l2={}".format(l1,l2))
-            print Ceasar(abc,sifr3, l1, l2)    
+            print(Ceasar(abc,sifr3, l1, l2))
 
 
 
@@ -102,28 +102,28 @@ def inverse(M):
 
 def Hill(text,K):
     text = clean_text(text)
-    
+
     # cc := ciphered text to numbers
     cc = []
-    
+
     for c in text:
         cc.append(abc.index(c))
-       
+
     res=unicode('','utf-8')
-        
+
     i = 0
     while i < len(text):
-      
+
         K_inv = inverse(K)
         c_vector = [ cc[i], cc[i+1] ]
 
         m_vector = mod_of_vector(vector_x_matrix( c_vector, K_inv ), n)
         for el in m_vector:
-            res += abc[el]     
-        i+=2 
-    
-    return res
+            res += abc[el]
+        i+=2
 
+    return res
+a
 # uzduotis_1
 #print Ceasar(abcd, sifr1, 25, 48)
 
@@ -135,5 +135,6 @@ def Hill(text,K):
 #bf_Ceasar_2()
 
 # uzduotis_4
-#print Hill(sifr4, K)
+print(Hill(sifr4, K))
+
 

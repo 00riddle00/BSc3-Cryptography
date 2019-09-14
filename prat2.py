@@ -123,7 +123,7 @@ def Hill(text,K):
         i+=2
 
     return res
-a
+    
 # uzduotis_1
 #print Ceasar(abcd, sifr1, 25, 48)
 

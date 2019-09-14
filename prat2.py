@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
+
+from copy import deepcopy
+
 abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
 abcd=unicode('AaĄąBbCcČčDdEeĘęĖėFfGgHhIiĮįYyJjKkLlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž','utf-8')
 n = len(abc)
+K = [[25,14],[6,29]]
 
 sifr1=u'''
 Pūbtb ūhaėū eyeąk cmėiū zoeim 
@@ -65,8 +70,6 @@ def bf_Ceasar_2():
             print("l1={}  | l2={}".format(l1,l2))
             print Ceasar(abc,sifr3, l1, l2)    
 
-K = [[25,14],[6,29]]
-print(K)
 
 
 def det(M):
@@ -93,6 +96,7 @@ def reorderM(M):
     return M1
 
 def inverse(M):
+    # Sage is needed here. 1/x => 0, 1.0/x => ok, but we need fractions
     return mod_of_matrix(scalar_x_matrix (1 / det(M), reorderM(K)), n)
 
 

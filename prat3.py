@@ -159,122 +159,40 @@ def friedmann_test(sifr_rakto_dalis):
 # UZD4
 
 
-## Dazniai
-from collections import defaultdict
-abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
-def freq(text):
-    d = defaultdict(int)
-    s=""
-    for w in text:
-        if w in abc:
-            d[w] += 1                   
-    for w in sorted(d, key=d.get, reverse=True):
-        s+=w
-    return s
-
-t='TRRyyyIIU'
-print(freq(t))
-
-'AEIO'
-
-## Friedmann test
-def friedm(text,k):
-    textn=unicode("",'utf-8')
-    for r in text:
-        if r in abc:
-            textn+=r
-    l=len(textn)
-    s=0
-    for i in range(k,l):
-        if textn[i]==textn[i-k] :
-            s+=1
-    return  1.*s/(l-k)  
-t=unicode('PIGĄU KCLĘR ŽSOPĘ CKCIŲ ĖGACY ','utf-8')
-print(friedm(t,2))
-
-from collections import defaultdict
-abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
-n=len(abc)
-
-## Raktui speti
-def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas šifro raktas
-    tst=unicode('','utf-8')
-    for r in test:
-        if r in abc:
-            tst+=r    
-    tstk=unicode('','utf-8')
-    for r in tst:
-        tstk+=abc[(abc.index(r)+k)%n]
-    d = defaultdict(int)
-    sifrn=unicode('','utf-8')
-    for r in sifr:
-        if r in abc: sifrn+=r
-    for r in sifrn:
-        if r in tstk: d[r]+=1
-    kiek=len(sifrn)
-    s=0
-    for a in d.keys(): s+=d[a]
-    return s/kiek
-test=unicode('ABC','utf-8')
-sifr=unicode('ABABABASSDDHHDKKKCCCCCLKLDKSJJSJSJLL','utf-8')
-
-guess(test,2,sifr)
-
-## SKAIDYMAS
-abcu='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-n=len(abcu)
-def prepare2(text): #remove non-ascii
-    textn=''
-    for a in text:
-        if a in abcu:
-            textn+=a
-    return textn.upper()
 
 
-def split(text,d):
-    textn=prepare2(text)
-    tspl=['']*d
-    n=len(textn)
-    for i in range(0,n):
-        tspl[i%d]+=textn[i]
-    return tspl    
-    
-f=split('ABABABABABAB',2)
-f[0],f[1]
+def autosrift(text, key):
+    text = clean_text(text)
+    galut_res = u''
+    ilgis = len(key)
+    viso_text_ilgis = len(text)
+    for i in range(ilgis,viso_text_ilgis,ilgis):
+        print("i=", i)
+        print(text[i-6:i])
+        #print sifr_to_desifr(key)
+        #print sifr4[i-6:i]
+        #desifr_key = key
+        #if (i-6 == 0):
+        desifr_key = sifr_to_desifr(key)
+        res = Vigenere(text[i-6:i], desifr_key)
+        key = res
+        print("KEY")
+        print(key)
+        #print("res=")
+        #print(res)
+        for a in res:
+            galut_res+=a
+    return galut_res
 
-def Vigenere2(text,key): #Vigenere cipher
-    textn=prepare(text)
-    keyn=prepare(key)
-    textc=u""
-    keys=[]
-    lk=len(keyn)
-    for i in range(0,lk):
-        keys.append(abc.index(keyn[i]))
-    lt=len(textn)
-    for i in range(0,lt):
-        textc+=abc[(abc.index(textn[i])+keys[i%lk])%n]
-    return textc
+print("TEST")
+print(sifr4_raktas)
+#print(autosrift(sifr4, sifr4_raktas))
+desifr4_raktas = sifr_to_desifr(sifr4_raktas)
+print(Vigenere(u'EDFSAĮ', desifr4_raktas))
 
-sifr4 = clean_text(sifr4)
-
-n = len(sifr4_raktas)
-viso_text_ilgis = len(sifr4)
-galut_res = u''
-
-print(viso_text_ilgis)
-
-
-for i in range(n,viso_text_ilgis,n):
-    #print(i)
-    continue
-    res = Vigenere2(sifr4[n-6:n], sifr_to_desifr(sifr4_raktas))
-    sifr4_raktas = res
-    for a in res:
-        galut_res+=a
-
-print(galut_res)
-
-
+#print(Vigenere(u'EDFSAĮ', sifr_to_desifr(u'KLEVAS')))
+#print(Vigenere(u'NŪTCVĄ', u'SOLIAR'))
+#print(sifr_to_desifr(u'KLEVAS'))
 
 
 

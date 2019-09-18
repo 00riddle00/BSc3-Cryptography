@@ -3,6 +3,8 @@ from collections import defaultdict
 
 abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
 abcu='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+test=unicode('AEIO','utf-8')
+
 length=len(abc)
 
 
@@ -159,13 +161,17 @@ def freq(text):
     s=""
     for w in text:
         if w in abc:
-            d[w] += 1                   
-    for w in sorted(d, key=d.get, reverse=True):
-        s+=w
-    return s
+            d[w] += 1
+    return d
+    #for w in sorted(d, key=d.get, reverse=True):
+    #    s+=w
+        
+    #return s
 
-t='TRRyyyIIU'
-print(freq(t))
+#t='TRRyyyIIU'
+#t='AAABBCEFGABC'
+#print("FRE")
+#print(freq(t))
 
 
 # Friedmano testas
@@ -180,8 +186,10 @@ def friedm(text,k):
         if textn[i]==textn[i-k] :
             s+=1
     return  1.*s/(l-k)  
-t=unicode('PIGĄU KCLĘR ŽSOPĘ CKCIŲ ĖGACY ','utf-8')
-print(friedm(t,2))
+
+#t=unicode('PIGĄU KCLĘR ŽSOPĘ CKCIŲ ĖGACY ','utf-8')
+
+
 
 
 #Raktui spėti
@@ -203,11 +211,8 @@ def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas 
     s=0
     for a in d.keys(): s+=d[a]
     return s/kiek
-test=unicode('ABC','utf-8')
-sifr=unicode('ABABABASSDDHHDKKKCCCCCLKLDKSJJSJSJLL','utf-8')
 
-guess(test,2,sifr)
-
+#guess(test,2,sifr)
 
 # Skaidymas
 def prepare(text): #remove non-ascii
@@ -219,15 +224,13 @@ def prepare(text): #remove non-ascii
 
 
 def split(text,d):
-    textn=prepare(text)
+    #textn=prepare(text)
     tspl=['']*d
-    n=len(textn)
+    n=len(text)
     for i in range(0,n):
-        tspl[i%d]+=textn[i]
+        tspl[i%d]+=text[i]
     return tspl    
     
-f=split('ABABABABABAB',2)
-f[0],f[1]
 
 
 
@@ -243,8 +246,46 @@ f[0],f[1]
 #print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis))))
 
 # UZD3
+sifr3 = clean_text(sifr3)
 
+print(friedm(sifr3,1))
+print(friedm(sifr3,2))
+print(friedm(sifr3,3))
+print(friedm(sifr3,4))
+print(friedm(sifr3,5))
+print(friedm(sifr3,6))
+print(friedm(sifr3,7))
+print(friedm(sifr3,8))
+print(friedm(sifr3,9))
+print(friedm(sifr3,10))
+
+#f = split(sifr3,0)
+# f = []
+# for i in range(1,8):
+#     a = split(sifr3,i)[0]
+#     fre = freq(a)
+#     test_x = [char for char in test]
+#     print test_x
+#     for i in range(0, 32):
+#         test_x = [abc[  (abc.index(char) + 1) % length ] for char in test_x]
+#         counts = 0
+#         for char in test_x:
+#             counts += fre[char]
+#         print("i={}, counts={}".format(i, counts))
+
+
+        
+    #exit(1)
+    #print("a="+a)
+    #print guess(u'AEIO', i, a)
+    #f.append(split(sifr3,i))
+    
+
+
+
+
+#print(f)
 
 # UZD4
-#print auto_vigenere(sifr4, sifr4_raktas)
+print auto_vigenere(sifr3, u'CRCCŠGR')
 

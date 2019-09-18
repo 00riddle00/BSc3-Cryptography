@@ -1,10 +1,10 @@
 import string
 
-abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
-n=len(abc)
+abc_lt=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
+abc_en=unicode('ABCDEFGHIJKLMNOPQRSTUVWXYZ','utf-8')
 
 sifr1_raktas = u'STOGAS'
-  
+
 sifr1 = u'''
 KTŠRA LETYŽ OĘVGA ZLCĘĮ HŪEKM 
 YOGIJ ĘĄCZK SŪYDG NVKĮH ZRTCM 
@@ -84,7 +84,9 @@ FĄĖPĘ DGIĖU EMTŽC ĄĮOĘS IDUNE
 VFKIJ ĘBFSY VĄFGO CŽŽPE EKŠ  
 '''
 
-sifr4 = u'''
+sifr4_lt_raktas = u'KLEVAS'
+
+sifr4_lt=u'''
 ĘDSFA ĮNŪTC VĄNPJ COUNI ŽSĘAH 
 ŠLKĘS VZGHŪ ĮFČBV ŪACCI FYSŪC 
 ŽBCĖŪ RDŲCŽ REDMJ ŽHSLD ŽČĖCĖ 
@@ -99,49 +101,31 @@ MŽDDK BMJŪL ČOMĖK ĄKJĘT KORĖB
 ĮERBĄ RČĖŪS ĄĘKŪT HŠSRĖ VSŠYB 
 ĮDĖBČ BGLĄB ĘYVVŪ TČŪNV TDRSC 
 HGDFŲ JEIHA ĘEAŪH NAHVĖ LDSHS 
-TTSSA ĖDIĘO IYŠIS ADJ   
+TTSSA ĖDIĘO IYŠIS ADJ
 '''
 
-sifr4_raktas = u'KLEVAS'
+sifr4_en_raktas = u'DECEPTIVE'
+sifr4_en=u'ZICVTWQNGKZEIIGASXSTSLVVWLA'
 
-
-def prepare(text):
-    text=text.upper()
-    textn=u''
-    for a in text:
-        if a in abc:
-            textn+=a
-    return textn
-
-def Vigenere(text,key): #Vigenere cipher
-    textn=prepare(text)
-    keyn=prepare(key)
-    textc=u""
-    keys=[]
-    lk=len(keyn)
-    for i in range(0,lk):
-        keys.append(abc.index(keyn[i]))
-    lt=len(textn)
-    for i in range(0,lt):
-        textc+=abc[(abc.index(textn[i])+keys[i%lk])%n]
-    return textc
+#def prepare(text):
+#    text=text.upper()
+#    textn=u''
+#    for a in text:
+#        if a in abc:
+#            textn+=a
+#    return textn
 
 def clean_text(text):
     return text.replace('\n', ' ').replace('\r', '').replace(' ', '')
 
-def sifr_to_desifr(sifr_raktas):
+def sifr_to_desifr(sifr_raktas,abc):
+    abc_len = len(abc)
     desifr_raktas = u''
     for let in sifr_raktas:
         ind = abc.index(let)
-        new_ind = (-1 * ind) % 32
+        new_ind = (-1 * ind) % abc_len
         desifr_raktas += abc[new_ind]
     return desifr_raktas
-
-# PVZ
-#print Vigenere(u'kalnas', u'žemė')
-
-# UZD1
-#print Vigenere(sifr1,sifr_to_desifr(sifr1_raktas))
 
 def friedmann_test(sifr_rakto_dalis):
     if sifr_rakto_dalis == u'GAN':
@@ -151,49 +135,53 @@ def friedmann_test(sifr_rakto_dalis):
         sifro_raktas = u'GANDRAS'
     return sifro_raktas
 
-# UZD2
-#print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis))))
-
-# UZD3
-
-# UZD4
-
-
-
-
-def autosrift(text, key):
+def Vigenere(text,key,abc): #Vigenere cipher
     text = clean_text(text)
-    galut_res = u''
+    textc=u''
+    keys=[]
+    lk=len(key)
+    abc_len=len(abc)
+    for i in range(0,lk):
+        keys.append(abc.index(key[i]))
+    lt=len(text)
+    for i in range(0,lt):
+        textc+=abc[(abc.index(text[i])+keys[i%lk])%abc_len]
+    return textc
+
+def auto_vigenere(text, key, abc):
+    text = clean_text(text)
+    fin_res = u''
     ilgis = len(key)
     viso_text_ilgis = len(text)
     for i in range(ilgis,viso_text_ilgis,ilgis):
         print("i=", i)
-        print(text[i-6:i])
-        #print sifr_to_desifr(key)
-        #print sifr4[i-6:i]
-        #desifr_key = key
-        #if (i-6 == 0):
-        desifr_key = sifr_to_desifr(key)
-        res = Vigenere(text[i-6:i], desifr_key)
+        print("Textas=" + text[i-ilgis:i])
+
+        desifr_key = sifr_to_desifr(key,abc)
+        print("Desifr_key=" + desifr_key)
+
+        res = Vigenere(text[i-ilgis:i], desifr_key, abc)
+        print(res)
         key = res
-        print("KEY")
-        print(key)
-        #print("res=")
-        #print(res)
-        for a in res:
-            galut_res+=a
-    return galut_res
+        print("res="+res)
+        fin_res +=res
+    return fin_res
 
-print("TEST")
-print(sifr4_raktas)
-#print(autosrift(sifr4, sifr4_raktas))
-desifr4_raktas = sifr_to_desifr(sifr4_raktas)
-print(Vigenere(u'EDFSAĮ', desifr4_raktas))
+# PVZ
+#print Vigenere(u'KALNAS', u'ŽEMĖ', abc_lt)
 
-#print(Vigenere(u'EDFSAĮ', sifr_to_desifr(u'KLEVAS')))
-#print(Vigenere(u'NŪTCVĄ', u'SOLIAR'))
-#print(sifr_to_desifr(u'KLEVAS'))
+# UZD1
+#print Vigenere(sifr1,sifr_to_desifr(sifr1_raktas,abc_lt),abc_lt)
 
+# UZD2
+#print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis)), abc_lt),abc_lt)
+
+# UZD3
+
+# UZD4
+#print(auto_vigenere(sifr4_en, sifr4_en_raktas, abc_en))
+#print(10 * '--------------------------------\n')
+print(auto_vigenere(sifr4_lt, sifr4_lt_raktas, abc_lt))
 
 
 

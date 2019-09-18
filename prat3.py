@@ -1,10 +1,11 @@
 import string
 
-abc_lt=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
-abc_en=unicode('ABCDEFGHIJKLMNOPQRSTUVWXYZ','utf-8')
+abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
+length=len(abc)
+
 
 sifr1_raktas = u'STOGAS'
-
+  
 sifr1 = u'''
 KTŠRA LETYŽ OĘVGA ZLCĘĮ HŪEKM 
 YOGIJ ĘĄCZK SŪYDG NVKĮH ZRTCM 
@@ -84,9 +85,9 @@ FĄĖPĘ DGIĖU EMTŽC ĄĮOĘS IDUNE
 VFKIJ ĘBFSY VĄFGO CŽŽPE EKŠ  
 '''
 
-sifr4_lt_raktas = u'KLEVAS'
+sifr4_raktas = u'KLEVAS'
 
-sifr4_lt=u'''
+sifr4=u'''
 ĘDSFA ĮNŪTC VĄNPJ COUNI ŽSĘAH 
 ŠLKĘS VZGHŪ ĮFČBV ŪACCI FYSŪC 
 ŽBCĖŪ RDŲCŽ REDMJ ŽHSLD ŽČĖCĖ 
@@ -104,10 +105,7 @@ HGDFŲ JEIHA ĘEAŪH NAHVĖ LDSHS
 TTSSA ĖDIĘO IYŠIS ADJ
 '''
 
-sifr4_en_raktas = u'DECEPTIVE'
-sifr4_en=u'ZICVTWQNGKZEIIGASXSTSLVVWLA'
-
-#def prepare(text):
+#def prepare(text,abc):
 #    text=text.upper()
 #    textn=u''
 #    for a in text:
@@ -118,12 +116,11 @@ sifr4_en=u'ZICVTWQNGKZEIIGASXSTSLVVWLA'
 def clean_text(text):
     return text.replace('\n', ' ').replace('\r', '').replace(' ', '')
 
-def sifr_to_desifr(sifr_raktas,abc):
-    abc_len = len(abc)
+def sifr_to_desifr(sifr_raktas):
     desifr_raktas = u''
     for let in sifr_raktas:
         ind = abc.index(let)
-        new_ind = (-1 * ind) % abc_len
+        new_ind = (-1 * ind) % length
         desifr_raktas += abc[new_ind]
     return desifr_raktas
 
@@ -135,53 +132,45 @@ def friedmann_test(sifr_rakto_dalis):
         sifro_raktas = u'GANDRAS'
     return sifro_raktas
 
-def Vigenere(text,key,abc): #Vigenere cipher
+def Vigenere(text,key): #Vigenere cipher
     text = clean_text(text)
+    abc_len=len(abc)
     textc=u''
     keys=[]
     lk=len(key)
-    abc_len=len(abc)
     for i in range(0,lk):
         keys.append(abc.index(key[i]))
     lt=len(text)
     for i in range(0,lt):
-        textc+=abc[(abc.index(text[i])+keys[i%lk])%abc_len]
+        textc+=abc[(abc.index(text[i])+keys[i%lk])%length]
     return textc
 
-def auto_vigenere(text, key, abc):
+def auto_vigenere(text, key):
     text = clean_text(text)
     fin_res = u''
     ilgis = len(key)
     viso_text_ilgis = len(text)
+    teksto_dalis = u''
     for i in range(ilgis,viso_text_ilgis,ilgis):
-        print("i=", i)
-        print("Textas=" + text[i-ilgis:i])
-
-        desifr_key = sifr_to_desifr(key,abc)
-        print("Desifr_key=" + desifr_key)
-
-        res = Vigenere(text[i-ilgis:i], desifr_key, abc)
-        print(res)
-        key = res
-        print("res="+res)
+        teksto_dalis = text[i-ilgis:i]
+        desifr_key = sifr_to_desifr(key)
+        res = Vigenere(teksto_dalis, desifr_key)
+        key = teksto_dalis
         fin_res +=res
     return fin_res
 
 # PVZ
-#print Vigenere(u'KALNAS', u'ŽEMĖ', abc_lt)
+#print Vigenere(u'KALNAS', u'ŽEMĖ')
 
 # UZD1
-#print Vigenere(sifr1,sifr_to_desifr(sifr1_raktas,abc_lt),abc_lt)
+#print Vigenere(sifr1,sifr_to_desifr(sifr1_raktas))
 
 # UZD2
-#print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis)), abc_lt),abc_lt)
+#print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis))))
 
 # UZD3
 
+
 # UZD4
-#print(auto_vigenere(sifr4_en, sifr4_en_raktas, abc_en))
-#print(10 * '--------------------------------\n')
-print(auto_vigenere(sifr4_lt, sifr4_lt_raktas, abc_lt))
-
-
+#print auto_vigenere(sifr4, sifr4_raktas)
 

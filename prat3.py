@@ -105,14 +105,6 @@ HGDFŲ JEIHA ĘEAŪH NAHVĖ LDSHS
 TTSSA ĖDIĘO IYŠIS ADJ
 '''
 
-#def prepare(text,abc):
-#    text=text.upper()
-#    textn=u''
-#    for a in text:
-#        if a in abc:
-#            textn+=a
-#    return textn
-
 def clean_text(text):
     return text.replace('\n', ' ').replace('\r', '').replace(' ', '')
 

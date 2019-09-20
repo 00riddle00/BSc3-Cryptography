@@ -161,18 +161,10 @@ def freq(text):
     s=""
     for w in text:
         if w in abc:
-            d[w] += 1
-    return d
-    #for w in sorted(d, key=d.get, reverse=True):
-    #    s+=w
-        
-    #return s
-
-#t='TRRyyyIIU'
-#t='AAABBCEFGABC'
-#print("FRE")
-#print(freq(t))
-
+            d[w] += 1                   
+    for w in sorted(d, key=d.get, reverse=True):
+        s+=w
+    return s
 
 # Friedmano testas
 def friedm(text,k):
@@ -187,11 +179,6 @@ def friedm(text,k):
             s+=1
     return  1.*s/(l-k)  
 
-#t=unicode('PIGĄU KCLĘR ŽSOPĘ CKCIŲ ĖGACY ','utf-8')
-
-
-
-
 #Raktui spėti
 def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas šifro raktas
     tst=unicode('','utf-8')
@@ -200,7 +187,7 @@ def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas 
             tst+=r    
     tstk=unicode('','utf-8')
     for r in tst:
-        tstk+=abc[(abc.index(r)+k)%n]
+        tstk+=abc[(abc.index(r)+k)%length]
     d = defaultdict(int)
     sifrn=unicode('','utf-8')
     for r in sifr:
@@ -212,7 +199,7 @@ def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas 
     for a in d.keys(): s+=d[a]
     return s/kiek
 
-#guess(test,2,sifr)
+
 
 # Skaidymas
 def prepare(text): #remove non-ascii
@@ -236,6 +223,7 @@ def split(text,d):
 
 
 
+
 # PVZ
 #print Vigenere(u'KALNAS', u'ŽEMĖ')
 
@@ -246,46 +234,100 @@ def split(text,d):
 #print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis))))
 
 # UZD3
+
+### dazniai
+#t='TRRyyyIIU'
+#print(freq(t))
+
+### skaidymas
+#f=split('ABABABABABAB',2)
+#print(f)
+#print f[0]
+#print f[1]
+
 sifr3 = clean_text(sifr3)
 
-print(friedm(sifr3,1))
-print(friedm(sifr3,2))
-print(friedm(sifr3,3))
-print(friedm(sifr3,4))
-print(friedm(sifr3,5))
-print(friedm(sifr3,6))
-print(friedm(sifr3,7))
-print(friedm(sifr3,8))
-print(friedm(sifr3,9))
-print(friedm(sifr3,10))
-
-#f = split(sifr3,0)
-# f = []
-# for i in range(1,8):
-#     a = split(sifr3,i)[0]
-#     fre = freq(a)
-#     test_x = [char for char in test]
-#     print test_x
-#     for i in range(0, 32):
-#         test_x = [abc[  (abc.index(char) + 1) % length ] for char in test_x]
-#         counts = 0
-#         for char in test_x:
-#             counts += fre[char]
-#         print("i={}, counts={}".format(i, counts))
-
-
-        
-    #exit(1)
-    #print("a="+a)
-    #print guess(u'AEIO', i, a)
-    #f.append(split(sifr3,i))
+for i in range(1,20):
+    print("i={}, friedm={}".format(i, friedm(sifr3,i)))
     
+# ilgis = 7
+
+c_x = []
+for i in range(0,7):
+    x = ''.join(map(unicode, split(sifr3[i:],7)[0]))
+    c_x.append(x)
+
+c1 = c_x[0]
+c2 = c_x[1]
+c3 = c_x[2]
+c4 = c_x[3]
+c5 = c_x[4]
+c6 = c_x[5]
+c7 = c_x[6]
+
+print(u"c1={}".format(c1))
+print(u"c2={}".format(c2))
+print(u"c3={}".format(c3))
+print(u"c4={}".format(c4))
+print(u"c5={}".format(c5))
+print(u"c6={}".format(c6))
+print(u"c7={}".format(c7))
+
+
+
+#c1='FVY...
+#c2='ĮFŽ...
+#c3='LBC...
+#c4='PPF...
+#c5='IFĘ...
+#c6='ŽOE...
+#c7='HHS...
+
+#for i in range(0,32):
+#    print("i = ", i)
+#    print float(guess(test,i,c1))
+   
+def freq2(text):
+    d = defaultdict(int)
+    s=""
+    for w in text:
+        if w in abc:
+            d[w] += 1
+    return d
+
+fre = freq2(c7)
+for key, val in fre.items():
+    print u'{}={}'.format(key, val),
+
+print('\n')
 
 
 
 
-#print(f)
+
+for i in range(0, 32):
+    if i == 0:
+        test_x = [char for char in test]
+    else:
+        test_x = [abc[  (abc.index(char) + 1) % length ] for char in test_x]  
+    counts = 0
+    for char in test_x:
+        counts += fre[char]
+    print(u"i={}, {}, counts={}, raides={}".format(i, abc[i], counts, ''.join(map(unicode, test_x))))
+    print float(guess(u'AEIO', i, x))
+    print float(guess(''.join(map(unicode, test_x)), i, x))
+    
+    
+    
+print(Vigenere(sifr3,sifr_to_desifr(u'STIPRUS')))
+
+
+
+
 
 # UZD4
-print auto_vigenere(sifr3, u'CRCCŠGR')
+#print auto_vigenere(sifr4, sifr4_raktas)
+
+
+
 

@@ -156,15 +156,24 @@ def auto_vigenere(text, key):
     return fin_res
 
 # Dažniai
-def freq(text):
+#def freq(text):
+#    d = defaultdict(int)
+#    s=""
+#    for w in text:
+#        if w in abc:
+#            d[w] += 1                   
+#    for w in sorted(d, key=d.get, reverse=True):
+#        s+=w
+#    return s
+
+# Dažniai (mano f-ja)
+def freq2(text):
     d = defaultdict(int)
     s=""
     for w in text:
         if w in abc:
-            d[w] += 1                   
-    for w in sorted(d, key=d.get, reverse=True):
-        s+=w
-    return s
+            d[w] += 1
+    return d
 
 # Friedmano testas
 def friedm(text,k):
@@ -179,50 +188,46 @@ def friedm(text,k):
             s+=1
     return  1.*s/(l-k)  
 
-#Raktui spėti
-def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas šifro raktas
-    tst=unicode('','utf-8')
-    for r in test:
-        if r in abc:
-            tst+=r    
-    tstk=unicode('','utf-8')
-    for r in tst:
-        tstk+=abc[(abc.index(r)+k)%length]
-    d = defaultdict(int)
-    sifrn=unicode('','utf-8')
-    for r in sifr:
-        if r in abc: sifrn+=r
-    for r in sifrn:
-        if r in tstk: d[r]+=1
-    kiek=len(sifrn)
-    s=0
-    for a in d.keys(): s+=d[a]
-    return s/kiek
-
-
-
 # Skaidymas
-def prepare(text): #remove non-ascii
-    textn=''
-    for a in text:
-        if a in abcu:
-            textn+=a
-    return textn.upper()
-
-
 def split(text,d):
-    #textn=prepare(text)
     tspl=['']*d
     n=len(text)
     for i in range(0,n):
         tspl[i%d]+=text[i]
-    return tspl    
-    
+    return tspl   
 
+# Raktui spėti
+# def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas šifro raktas
+#     tst=unicode('','utf-8')
+#     for r in test:
+#         if r in abc:
+#             tst+=r    
+#     tstk=unicode('','utf-8')
+#     for r in tst:
+#         tstk+=abc[(abc.index(r)+k)%length]
+#     d = defaultdict(int)
+#     sifrn=unicode('','utf-8')
+#     for r in sifr:
+#         if r in abc: sifrn+=r
+#     for r in sifrn:
+#         if r in tstk: d[r]+=1
+#     kiek=len(sifrn)
+#     s=0
+#     for a in d.keys(): s+=d[a]
+#     return s/kiek
 
-
-
-
+# Raktui spėti (mano f-ja)
+def guess2(test, c_x): #test - dažniausių raidžių eilutė, c_x -> pvz c1 = 'ABCD' -> perrikiuotas tekstas pagal rakto ilgi
+    for i in range(0, length):
+        if i == 0:
+            test_list = [char for char in test]
+        else:
+            test_list = [abc[  (abc.index(char) + 1) % length ] for char in test_list]  
+        counts = 0
+        dazniai = freq2(c_x)
+        for char in test_list:
+            counts += dazniai[char]
+        print(u"i={}, raktas={}, dazniai={}, raides={}".format(i, abc[i], counts, ''.join(map(unicode, test_list))))
 
 # PVZ
 #print Vigenere(u'KALNAS', u'ŽEMĖ')
@@ -234,47 +239,16 @@ def split(text,d):
 #print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis))))
 
 # UZD3
-
-### dazniai
-#t='TRRyyyIIU'
-#print(freq(t))
-
-### skaidymas
-#f=split('ABABABABABAB',2)
-#print(f)
-#print f[0]
-#print f[1]
-
 sifr3 = clean_text(sifr3)
 
+# ieskome rakto ilgio
 for i in range(1,20):
     print("i={}, friedm={}".format(i, friedm(sifr3,i)))
     
-# ilgis = 7
+# radome, ilgis yra 7
+ilgis = 7
 
-c_x = []
-for i in range(0,7):
-    x = ''.join(map(unicode, split(sifr3[i:],7)[0]))
-    c_x.append(x)
-
-c1 = c_x[0]
-c2 = c_x[1]
-c3 = c_x[2]
-c4 = c_x[3]
-c5 = c_x[4]
-c6 = c_x[5]
-c7 = c_x[6]
-
-print(u"c1={}".format(c1))
-print(u"c2={}".format(c2))
-print(u"c3={}".format(c3))
-print(u"c4={}".format(c4))
-print(u"c5={}".format(c5))
-print(u"c6={}".format(c6))
-print(u"c7={}".format(c7))
-
-
-
+# padaliname sifra i 7 dalis, perrikiuodami pagal rakto ilgi
 #c1='FVY...
 #c2='ĮFŽ...
 #c3='LBC...
@@ -283,46 +257,17 @@ print(u"c7={}".format(c7))
 #c6='ŽOE...
 #c7='HHS...
 
-#for i in range(0,32):
-#    print("i = ", i)
-#    print float(guess(test,i,c1))
-   
-def freq2(text):
-    d = defaultdict(int)
-    s=""
-    for w in text:
-        if w in abc:
-            d[w] += 1
-    return d
+c_x = []
+for i in range(0,ilgis):
+    x = ''.join(map(unicode, split(sifr3[i:],ilgis)[0]))
+    c_x.append(x)
 
-fre = freq2(c7)
-for key, val in fre.items():
-    print u'{}={}'.format(key, val),
+for i in range(0, ilgis):
+    print("spejame C{}".format(i+1))
+    guess2(test, c_x[i])
 
-print('\n')
-
-
-
-
-
-for i in range(0, 32):
-    if i == 0:
-        test_x = [char for char in test]
-    else:
-        test_x = [abc[  (abc.index(char) + 1) % length ] for char in test_x]  
-    counts = 0
-    for char in test_x:
-        counts += fre[char]
-    print(u"i={}, {}, counts={}, raides={}".format(i, abc[i], counts, ''.join(map(unicode, test_x))))
-    print float(guess(u'AEIO', i, x))
-    print float(guess(''.join(map(unicode, test_x)), i, x))
-    
-    
-    
+# pagal daznius ir intuicija mazdaug nustateme, kad raktas yra 'STIPRUS'
 print(Vigenere(sifr3,sifr_to_desifr(u'STIPRUS')))
-
-
-
 
 
 # UZD4

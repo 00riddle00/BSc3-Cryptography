@@ -73,14 +73,17 @@ def deenigma(text, k1, k2, L1, L2):
 
     mapL1 = dict()
 
+    # sudarome atvirkstini keitini
     for i in range(0, lg):
         mapL1[L1[i]] = i
 
     mapL2 = dict()
 
+    # sudarome atvirkstini keitini
     for i in range(0, lg):
         mapL2[L2[i]] = i
 
+    # rotoriai
     for i in range(0, lt):
         k = i
         m1 = k%26

@@ -22,16 +22,9 @@ for M in M1:
         x=iter(x,k,f1)
     res.append(x[::-1])
 
-#print chr(x[0])
-
-#res = [chr(x[i]) for x in res]#[i] for i in res]
-
-#print res
+for x in res:
+    print chr(x[0]),
+    print chr(x[1]),
 
 
 
-#To answer your question with your own suggestion:
-
-#>>> [x for b in a for x in b] # Works fin
-
-#chr(x) for b in x for x in res

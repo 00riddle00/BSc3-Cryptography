@@ -13,10 +13,6 @@ def de_feistel(M, K, f):
             m=iter(m,k,f)
         res.append(m[::-1])
 
-    #for m in res:
-    #    print chr(m[0]),
-    #    print chr(m[1]),
-
     return ''.join([chr(item) for sublist in res for item in sublist])
     
 # UZD1
@@ -31,48 +27,36 @@ M2 = [[90, 21], [79, 10], [85, 4], [83, 4], [83, 4], [75, 12], [76, 11], [65, 8]
 K2 = [0, 162] # 0 - nezinom
 f2 = '(r&k)^((k%16)|r)'
 
+# rakto ieskojimas (uzkomentuota)
+#for k1 in range(256):
+#    print("raktas=",k1)
 
-for k1 in range(256):
-    if k1 != 2:
-        continue
-    print("raktas=",k1)
-    K2[0] = k1
-    print de_feistel(M2, K2, f2)
+# suradome rakta
+K2[0] = 2
+
+print de_feistel(M2, K2, f2)
+
 
 # UZD3
 M3 = [[78, 31], [75, 26], [82, 3], [70, 7], [71, 2], [71, 4], [65, 7], [65, 8], [65, 3], [81, 26], [92, 1], [74, 23], [66, 5], [75, 18], [78, 25], [69, 2], [83, 18], [67, 7], [89, 23], [81, 26], [93, 7], [72, 17], [75, 18], [67, 4], [66, 5], [89, 17], [65, 12], [76, 21], [78, 19], [65, 13], [74, 29], [76, 13], [67, 10], [81, 25], [89, 17], [65, 12], [67, 4], [67, 2], [91, 7], [77, 7], [77, 30], [68, 13], [92, 2], [81, 27], [76, 29], [70, 10], [73, 12], [65, 2], [73, 5], [76, 29], [67, 15], [73, 3], [89, 19], [89, 21], [77, 15], [93, 22], [69, 8], [76, 21], [75, 30], [89, 21], [81, 13], [81, 19], [69, 2], [95, 18], [81, 27], [70, 11], [92, 2], [81, 26], [89, 17], [89, 18], [89, 20], [68, 5], [76, 27], [67, 2], [67, 4], [83, 24], [81, 26], [76, 29], [83, 25], [77, 31], [93, 12], [74, 19]]
 K3 = [0,0] # abieju nezinome
 f3 = '(r&k)^((k%16)|r)'
 
-br = False
-
 for k1 in range(1):
-    if br == True:
-        break
     for k2 in range(256):
         K3 = [k1,k2]
-        text = de_feistel(M3[0], K3, f3)
-        print(text)
-        #if text == 'VI':
-        #    print('raktai=',K3)
-        #    br = True
-        #    break
+        text = de_feistel(M3[:1], K3, f3)
+        if text == 'VI':
+            print('raktai=',K3)
+            br = True
+            break
+        else:
+            continue
+    break
             
-K3 = [0,24]
+print de_feistel(M3, K3, f3)
 
 
-res3 = []
-
-for M in M3:
-    x = M
-    for k in K3[::-1]:
-        x=iter(x,k,f3)
-    res3.append(x[::-1])
-
-for x in res3:
-    print chr(x[0]),
-    print chr(x[1]),
-print('\n')
 
 
 

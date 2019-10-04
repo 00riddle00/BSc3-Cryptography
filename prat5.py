@@ -1,4 +1,3 @@
-
 def iter(M,k,f):
     r=M[1]
     l=M[0]^^eval(f)
@@ -42,22 +41,16 @@ M3 = [[78, 31], [75, 26], [82, 3], [70, 7], [71, 2], [71, 4], [65, 7], [65, 8], 
 K3 = [0,0] # abieju nezinome
 f3 = '(r&k)^((k%16)|r)'
 
+
+raktai = []
+
 for k1 in range(256):
     for k2 in range(256):
         K3 = [k1,k2]
         text = de_feistel(M3[:1], K3, f3)
         if text == 'VI':
-            print('raktai=',K3)
-            br = True
-            break
-        else:
-            continue
-    break
+            raktai.append(K3)
 
-print de_feistel(M3, K3, f3)
-
-
-
-
-
-
+for K3 in raktai:
+    print K3,
+    print de_feistel(M3, K3, f3)

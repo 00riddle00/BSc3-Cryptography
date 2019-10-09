@@ -35,21 +35,22 @@ C2 = [[69, 83], [70, 68], [64, 73], [76, 84], [94, 77], [76, 75], [73, 86], [64,
 #IV2 = [7, 14]
 K2 = [215, 224, 185]
 f2 = '(r^k)&((k//16)|r)'
+f3 = '(m^k)&((k//16)|m)'
 
 def sk_fja(m,k):
-    T = (m^k)&((k//16)|m)
+    T = eval(f3)
     return [T,T]
 
-M = [[]]
+M_res = [[]]
 
 for i in range(len(C2)):
     ci = C2[i]
     Ti = sk_fja(i,K2[0])
     Tis = str_to_ord(feistel([Ti], K2, f2))
     mi = xor2(ci, Tis)
-    M.append(mi)
+    M_res.append(mi)
     
-print ''.join([chr(item) for sublist in M for item in sublist])
+print ''.join([chr(item) for sublist in M_res for item in sublist])
 
 
 

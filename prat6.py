@@ -41,12 +41,18 @@ C2_4 = C2[3]
 
 M = [[]]
 
-c1d = de_feistel([C2_1], K2, f2)
-
-m1 = xor(c1d, IV2)
-M.append(m1)
-
+for i in range(len(C2)):
+    ci = C2[i]
+    cid = de_feistel([ci], K2, f2)
+    mi = xor(cid, IV2)
+    IV2 = ci
+    M.append(mi)
+    
 print ''.join([chr(item) for sublist in M for item in sublist])
+
+    
+   
+
 
 
     

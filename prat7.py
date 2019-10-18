@@ -23,6 +23,9 @@ K_1_16 = K_1_8 + K_9_16
 
 print K_1_16
 
-for i in range(8):
-    for j in range(8):
-        print(K_
+#for i in range(8):
+#    for j in range(8):
+#        print(K_1_16[j+i]),
+#    print('| '),
+#    print(K_1_16[j+i+1])
+        

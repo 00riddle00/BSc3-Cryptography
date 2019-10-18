@@ -73,12 +73,16 @@ t = Y[1:]
 c=C_1_8[::-1]
 xp=(K_1_16[1:9])[::-1]
 
-print t
-print c
-print xp
+t = map(int, t)
+c = map(int, c)
+xp = map(int, xp)
 
-#cp=str_cipher(t,c,xp)
-#print cp
+cp=str_cipher(t,c,xp)
+print cp
+
+map(int, xp)
+
+print map(lambda x : chr(x), cp)
 
 
 #cp=str_cipher(t,c,xp)

@@ -1,35 +1,3 @@
-x1 = 'K'
-x2 = 'A'
-
-Y = [86, 1, 168, 188, 56, 70, 195, 235, 157, 91, 81, 148, 21, 113, 41, 71, 15, 173, 169, 38, 70, 215, 240, 129, 69, 77, 147, 21, 116, 50, 92, 9, 178, 160, 52, 83, 212, 229, 145, 93, 87, 137, 17, 106, 63, 88, 22, 160, 165, 62, 86, 212, 225, 145, 92, 91, 141, 31, 107, 58, 75, 15, 166, 165, 48, 80, 202, 244, 152, 75, 77, 128, 25, 125, 63, 82, 10, 174, 175, 60, 86, 203, 243, 145, 68, 81]
-
-c1 = 1
-
-K_1_8 = ord(x1)^^Y[0]
-K_9_16 = ord(x2)^^Y[1]
-
-#print type(K_1_8)
-#print str(K_1_8).encode()
-#print int(K_1_8).to_bytes(1)
-#print bytes(int(K_1_8))
-
-K_1_8 = list(format(K_1_8, '#010b')[2:])
-K_9_16 = list(format(K_9_16, '#010b')[2:])
-
-print K_1_8
-print K_9_16
-
-K_1_16 = K_1_8 + K_9_16
-
-#for i in range(8):
-#    for j in range(8):
-#        print(K_1_16[j+i]),
-#    print('| '),
-#    print(K_1_16[j+i+1])
-
-C_1_8 = [1,1,1,1,0,1,1,0]
-
-
 # The system of linear feedback registers
 
 def stream(c,xp,n):  # the keystream generation, c-coefficients, xp - initial state, n - number of bits
@@ -49,10 +17,8 @@ def stream(c,xp,n):  # the keystream generation, c-coefficients, xp - initial st
 
 # stream cipher
 # t = baitu masyvas, kuri reikia issifruoti/desifruoti
-# c = c8,c7,...,c1
-# xp = pradines reg sistemos padetys (ten mistika)
-
-
+# c = konstantos, paduodamos tokia tvarka: [c8,c7,...,c1]
+# xp = pradines reg sistemos padetys
 def str_cipher(t,c,xp): # t - plaintext (ASCII decimal list), c-coefficients, xp - initial state
     cp=[]
     k=len(t)
@@ -60,14 +26,40 @@ def str_cipher(t,c,xp): # t - plaintext (ASCII decimal list), c-coefficients, xp
     for i in range (0,k):
         cp.append(t[i]^^int(sr[8*i:8*i+8],2))
     return cp
-
 # How to use
-t=[10,123]
-c=[1,0,1,0,1,1,0,1]
-xp=[1,0,1,0,1,1,0,1]
-#cp=str_cipher(t,c,xp)
-#print cp
-#print str_cipher(cp,c,xp)
+# t=[10,123]
+# c=[1,0,1,0,1,1,0,1]
+# xp=[1,0,1,0,1,1,0,1]
+# cp=str_cipher(t,c,xp)
+# print cp
+# print str_cipher(cp,c,xp)
+
+# UZD1
+x1 = 'K'
+x2 = 'A'
+
+Y = [86, 1, 168, 188, 56, 70, 195, 235, 157, 91, 81, 148, 21, 113, 41, 71, 15, 173, 169, 38, 70, 215, 240, 129, 69, 77, 147, 21, 116, 50, 92, 9, 178, 160, 52, 83, 212, 229, 145, 93, 87, 137, 17, 106, 63, 88, 22, 160, 165, 62, 86, 212, 225, 145, 92, 91, 141, 31, 107, 58, 75, 15, 166, 165, 48, 80, 202, 244, 152, 75, 77, 128, 25, 125, 63, 82, 10, 174, 175, 60, 86, 203, 243, 145, 68, 81]
+
+c1 = 1
+
+K_1_8 = ord(x1)^^Y[0]
+K_9_16 = ord(x2)^^Y[1]
+
+K_1_8 = list(format(K_1_8, '#010b')[2:])
+K_9_16 = list(format(K_9_16, '#010b')[2:])
+
+K_1_16 = K_1_8 + K_9_16
+
+# spausdina matrica
+for i in range(8):
+    for j in range(8):
+        print(K_1_16[j+i]),
+    print('| '),
+    print(K_1_16[j+i+1])
+
+# gautos konstantos issprendus binay
+# lygciu sistema su xor vietoj sudeties
+C_1_8 = [1,1,1,1,0,1,1,0]
 
 t = Y[1:]
 c=C_1_8[::-1]
@@ -78,20 +70,11 @@ c = map(int, c)
 xp = map(int, xp)
 
 cp=str_cipher(t,c,xp)
-print cp
 
-map(int, xp)
+res = map(lambda x : chr(x), cp)
+res.insert(0, x1)
+print ''.join(res)
 
-print ''.join(map(lambda x : chr(x), cp))
+# UZD2
 
-
-#cp=str_cipher(t,c,xp)
-#print cp
-#print str_cipher(cp,c,xp)
-
-#cp=str_cipher(t,c,xp)
-#print cp
-#print str_cipher(cp,c,xp)
-
-#map(int, results)
-
+# bonus uzduotis, todel nepadaryta lol

@@ -82,7 +82,7 @@ print cp
 
 map(int, xp)
 
-print map(lambda x : chr(x), cp)
+print ''.join(map(lambda x : chr(x), cp))
 
 
 #cp=str_cipher(t,c,xp)

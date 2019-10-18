@@ -52,7 +52,7 @@ def stream(c,xp,n):  # the keystream generation, c-coefficients, xp - initial st
 # stream cipher
 # t = baitu masyvas, kuri reikia issifruoti/desifruoti
 # c = c8,c7,...,c1
-# xp = pradines reg sistemos padetys 
+# xp = pradines reg sistemos padetys (ten mistika)
 
 def str_cipher(t,c,xp): # t - plaintext (ASCII decimal list), c-coefficients, xp - initial state
     cp=[]
@@ -68,3 +68,7 @@ xp=[1,0,1,0,1,1,0,1]
 cp=str_cipher(t,c,xp)
 print cp
 print str_cipher(cp,c,xp)
+
+
+
+

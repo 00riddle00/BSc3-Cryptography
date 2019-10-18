@@ -21,8 +21,6 @@ print K_9_16
 
 K_1_16 = K_1_8 + K_9_16
 
-print K_1_16
-
 #for i in range(8):
 #    for j in range(8):
 #        print(K_1_16[j+i]),
@@ -54,6 +52,7 @@ def stream(c,xp,n):  # the keystream generation, c-coefficients, xp - initial st
 # c = c8,c7,...,c1
 # xp = pradines reg sistemos padetys (ten mistika)
 
+
 def str_cipher(t,c,xp): # t - plaintext (ASCII decimal list), c-coefficients, xp - initial state
     cp=[]
     k=len(t)
@@ -61,14 +60,34 @@ def str_cipher(t,c,xp): # t - plaintext (ASCII decimal list), c-coefficients, xp
     for i in range (0,k):
         cp.append(t[i]^^int(sr[8*i:8*i+8],2))
     return cp
+
 # How to use
-c=[1,0,1,0,1,1,0,1]
 t=[10,123]
+c=[1,0,1,0,1,1,0,1]
 xp=[1,0,1,0,1,1,0,1]
-cp=str_cipher(t,c,xp)
-print cp
-print str_cipher(cp,c,xp)
+#cp=str_cipher(t,c,xp)
+#print cp
+#print str_cipher(cp,c,xp)
+
+t = Y[1:]
+c=C_1_8[::-1]
+xp=(K_1_16[1:9])[::-1]
+
+print t
+print c
+print xp
+
+#cp=str_cipher(t,c,xp)
+#print cp
 
 
+#cp=str_cipher(t,c,xp)
+#print cp
+#print str_cipher(cp,c,xp)
 
+#cp=str_cipher(t,c,xp)
+#print cp
+#print str_cipher(cp,c,xp)
+
+#map(int, results)
 

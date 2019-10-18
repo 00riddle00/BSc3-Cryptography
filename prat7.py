@@ -57,7 +57,7 @@ for i in range(8):
     print('| '),
     print(K_1_16[j+i+1])
 
-# gautos konstantos issprendus binay
+# gautos konstantos issprendus binary
 # lygciu sistema su xor vietoj sudeties
 C_1_8 = [1,1,1,1,0,1,1,0]
 

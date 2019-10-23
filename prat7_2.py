@@ -81,7 +81,6 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 	while i < length:
 		majority = get_majority(reg_x_temp[6], reg_y_temp[5], reg_z_temp[4])
 		if reg_x_temp[6] == majority: 
-			# new = reg_x_temp[13] ^ reg_x_temp[16] ^ reg_x_temp[17] ^ reg_x_temp[18]
 			new = reg_x_temp[0] ^ reg_x_temp[1] ^ reg_x_temp[2] ^ reg_x_temp[3] ^ reg_x_temp[5] ^ reg_x_temp[6]
 			reg_x_temp_two = copy.deepcopy(reg_x_temp)
 			j = 1
@@ -91,7 +90,6 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 			reg_x_temp[0] = new
 
 		if reg_y_temp[5] == majority:
-			# new_one = reg_y_temp[20] ^ reg_y_temp[21]
 			new_one = reg_y_temp[0] ^ reg_y_temp[1] ^ reg_y_temp[2] ^ reg_y_temp[3] ^ reg_y_temp[5] ^ reg_y_temp[6]
 
 			reg_y_temp_two = copy.deepcopy(reg_y_temp)
@@ -102,7 +100,6 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 			reg_y_temp[0] = new_one
 
 		if reg_z_temp[4] == majority:
-			# new_two = reg_z_temp[7] ^ reg_z_temp[20] ^ reg_z_temp[21] ^ reg_z_temp[22]
 			new_two = reg_z_temp[0] ^ reg_z_temp[1] ^ reg_z_temp[2] ^ reg_z_temp[3] ^ reg_z_temp[5] ^ reg_z_temp[6]
 			reg_z_temp_two = copy.deepcopy(reg_z_temp)
 			m = 1

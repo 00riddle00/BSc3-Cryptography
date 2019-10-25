@@ -118,36 +118,25 @@ print c0
 print c1
 
 tm1 = ((m1-m0)**2)/len(m_bits)
-print tm1
+print "tm1 ", tm1
 
-cm1 = ((c1-c0)**2)/len(c_bits)
-print cm1
-
-# Chi-kvadrat su m laisvės laipsnių p- reikšmė
-m=1
-T = RealDistribution('chisquared', m)
-#t=2.5
-p=1-T.cum_distribution_function(tm1)
-
-# Standartinio normaliojo dėsnio p reikšmė
-N= RealDistribution('gaussian', 1)
-#t=2.5
-pm=1-N.cum_distribution_function(tm1)
-print pm
-
-
+tc1 = ((c1-c0)**2)/len(c_bits)
+print "tc1 ", tc1
 
 # Chi-kvadrat su m laisvės laipsnių p- reikšmė
 m=1
 T = RealDistribution('chisquared', m)
 #t=2.5
-p=1-T.cum_distribution_function(cm1)
+pm1=1-T.cum_distribution_function(tm1)
+print "pm1 ", pm1
 
-# Standartinio normaliojo dėsnio p reikšmė
-N= RealDistribution('gaussian', 1)
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=1
+T = RealDistribution('chisquared', m)
 #t=2.5
-pm=1-N.cum_distribution_function(cm1)
-print pm
+pc1=1-T.cum_distribution_function(tc1)
+print "pc1 ", pc1
+
 
 
 

@@ -75,9 +75,10 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 	keystream = []
 	i = 0
 
-	# keystream = []
-	keystream.insert(0, 0)
-	i = 1
+	# different case (in our class) -> first key element is calculated without the initial shift
+	# else uncomment these 2 lines
+	keystream.insert(0, reg_x[0] ^ reg_y[0] ^ reg_z[0])
+	i = i + 1
 
 	# print(reg_x_temp)
 	# print(reg_y_temp)
@@ -131,7 +132,6 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 
 		keystream.insert(i, reg_x_temp[0] ^ reg_y_temp[0] ^ reg_z_temp[0])
 		i = i + 1
-
 		# print(reg_x_temp)
 		# print(reg_y_temp)
 		# print(reg_z_temp)

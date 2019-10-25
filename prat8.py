@@ -192,3 +192,71 @@ print "pc2 ", pc2
 
 
 
+
+d = 3
+shift = d-1
+
+# TEKSTAS
+n = len(m_bits)
+m_bits_1 = m_bits[:n-shift]
+m_bits_2 = m_bits[shift:]
+
+n_tmp = n - shift
+
+X_d = 0
+
+for i in range(n_tmp-1):
+    if m_bits_1[i] != m_bits_2[i]:
+        X_d += 1
+        
+        
+tm3 = (2 * X_d - (n - d)) / (sqrt(n - d))
+print "tm3 ", tm3
+
+
+# Standartinio normaliojo dėsnio p reikšmė
+N= RealDistribution('gaussian', 1)
+#t=2.5
+# t3 < 0 (del to be minuso!!)
+#pm3=1-N.cum_distribution_function(tc3)
+pm3=N.cum_distribution_function(tm3)
+print "pm3 ", pm3
+
+
+# SIFRAS
+n = len(c_bits)
+c_bits_1 = c_bits[:n-shift]
+c_bits_2 = c_bits[shift:]
+
+n_tmp = n - shift
+
+X_d = 0
+
+for i in range(n_tmp-1):
+    if c_bits_1[i] != c_bits_2[i]:
+        X_d += 1
+        
+        
+tc3 = (2 * X_d - (n - d)) / (sqrt(n - d))
+print "tc3 ", tc3
+
+
+# Standartinio normaliojo dėsnio p reikšmė
+N= RealDistribution('gaussian', 1)
+#t=2.5
+# t3 < 0 (del to be minuso!!)
+#pc3=1-N.cum_distribution_function(tc3)
+pc3=N.cum_distribution_function(tc3)
+print "pc3 ", pc3
+
+   
+        
+        
+        
+        
+        
+        
+        
+        
+
+

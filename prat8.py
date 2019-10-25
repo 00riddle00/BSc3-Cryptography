@@ -84,6 +84,27 @@ res = map(lambda x : chr(x), cp)
 #res.insert(0, x1)
 print ''.join(res)
 
-m_bits = cp
-c_bits = Y
+m_bytes = cp
+c_bytes = Y
+
+
+# PAGALBA
+# Skaičiaus vertimas bitų eilute
+getBin = lambda x, n: x >= 0 and str(bin(x))[2:].zfill(n) or "-" + str(bin(x))[3:].zfill(n)
+getBin(1,8)
+
+m_bits_tmp = map(lambda x : getBin(x,8), m_bytes)
+c_bits_tmp = map(lambda x : getBin(x,8), c_bytes)
+
+m_bits = b''
+for bit8 in m_bits_tmp:
+    m_bits += bit8
+
+c_bits = b''
+for bit8 in c_bits_tmp:
+    c_bits += bit8
+
+print m_bits
+print c_bits
+
 

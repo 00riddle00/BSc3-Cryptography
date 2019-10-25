@@ -137,6 +137,37 @@ T = RealDistribution('chisquared', m)
 pc1=1-T.cum_distribution_function(tc1)
 print "pc1 ", pc1
 
+m_pairs = {
+    '00':0,
+    '01':0,
+    '10':0,
+    '11':0,
+}
+
+c_pairs = {
+    '00':0,
+    '01':0,
+    '10':0,
+    '11':0,
+}
+
+#m_bits = b'010100'
+#print m_bits[0:2]
+#i = 0
+#m_pairs[m_bits[0:2]] += 1
+#m_pairs[m_bits[i:i+2]] += 1
+
+for i in range(len(m_bits)-1):
+    m_pairs[m_bits[i:i+2]] += 1
+    
+for i in range(len(c_bits)-1):
+    c_pairs[c_bits[i:i+2]] += 1
+
+print m_pairs
+print c_pairs
+
+
+
 
 
 

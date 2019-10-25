@@ -107,4 +107,49 @@ for bit8 in c_bits_tmp:
 print m_bits
 print c_bits
 
+m0 = sum(map(lambda x : 1 if '0' in x else 0, m_bits)) 
+m1 = sum(map(lambda x : 1 if '1' in x else 0, m_bits)) 
+print m0
+print m1
+
+c0 = sum(map(lambda x : 1 if '0' in x else 0, c_bits)) 
+c1 = sum(map(lambda x : 1 if '1' in x else 0, c_bits))
+print c0
+print c1
+
+tm1 = ((m1-m0)**2)/len(m_bits)
+print tm1
+
+cm1 = ((c1-c0)**2)/len(c_bits)
+print cm1
+
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=1
+T = RealDistribution('chisquared', m)
+#t=2.5
+p=1-T.cum_distribution_function(tm1)
+
+# Standartinio normaliojo dėsnio p reikšmė
+N= RealDistribution('gaussian', 1)
+#t=2.5
+pm=1-N.cum_distribution_function(tm1)
+print pm
+
+
+
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=1
+T = RealDistribution('chisquared', m)
+#t=2.5
+p=1-T.cum_distribution_function(cm1)
+
+# Standartinio normaliojo dėsnio p reikšmė
+N= RealDistribution('gaussian', 1)
+#t=2.5
+pm=1-N.cum_distribution_function(cm1)
+print pm
+
+
+
+
 

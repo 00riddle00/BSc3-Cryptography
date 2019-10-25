@@ -29,9 +29,10 @@ def loading_registers(key): #loads registers using a 64-bit key as a parameter
 		k = k + 1
 		r = r + 1
 
-	# print('x ', reg_x)
-	# print('y ', reg_y)
-	# print('z ', reg_z)
+	print('x ', reg_x)
+	print('y ', reg_y)
+	print('z ', reg_z)
+	# exit(1)
 
 def set_key(key): #sets the key and loads the registers if it contains 0's and 1's and if it's exactly 64 bits 
 	if(len(key) == 24 and re.match("^([01])+", key)):
@@ -74,6 +75,10 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 	keystream = []
 	i = 0
 
+	# keystream = []
+	keystream.insert(0, 0)
+	i = 1
+
 	# print(reg_x_temp)
 	# print(reg_y_temp)
 	# print(reg_z_temp)
@@ -83,11 +88,16 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 	ctrl_2 = 2
 	ctrl_3 = 3
 
+	# for debug
+	# length = 8
 	while i < length:
 		majority = get_majority(reg_x_temp[ctrl_1], reg_y_temp[ctrl_2], reg_z_temp[ctrl_3])
-		if reg_x_temp[ctrl_1] == majority: 
-			# new = reg_x_temp[0] ^ reg_x_temp[1] ^ reg_x_temp[2] ^ reg_x_temp[3] ^ reg_x_temp[5] ^ reg_x_temp[6]
+		print("m=", majority)
+		if reg_x_temp[ctrl_1] == majority:
+			print("reg_x")
+			# modify here which fields are XORed
 			new = reg_x_temp[1] ^ reg_x_temp[2] ^ reg_x_temp[4] ^ reg_x_temp[5] ^ reg_x_temp[6] ^ reg_x_temp[7]
+			# new = reg_x_temp[1] ^ reg_x_temp[6] ^ reg_x_temp[7]
 			reg_x_temp_two = copy.deepcopy(reg_x_temp)
 			j = 1
 			while(j < len(reg_x_temp)):
@@ -96,9 +106,10 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 			reg_x_temp[0] = new
 
 		if reg_y_temp[ctrl_2] == majority:
-			# new_one = reg_y_temp[0] ^ reg_y_temp[1] ^ reg_y_temp[2] ^ reg_y_temp[3] ^ reg_y_temp[5] ^ reg_y_temp[6]
+			print("reg_y")
+			# modify here which fields are XORed
 			new_one = reg_y_temp[1] ^ reg_y_temp[2] ^ reg_y_temp[4] ^ reg_y_temp[5] ^ reg_y_temp[6] ^ reg_y_temp[7]
-
+			# new_one = reg_y_temp[1] ^ reg_y_temp[6] ^ reg_y_temp[7]
 			reg_y_temp_two = copy.deepcopy(reg_y_temp)
 			k = 1
 			while(k < len(reg_y_temp)):
@@ -107,8 +118,10 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 			reg_y_temp[0] = new_one
 
 		if reg_z_temp[ctrl_3] == majority:
-			# new_two = reg_z_temp[0] ^ reg_z_temp[1] ^ reg_z_temp[2] ^ reg_z_temp[3] ^ reg_z_temp[5] ^ reg_z_temp[6]
+			print("reg_z")
+			# modify here which fields are XORed
 			new_two = reg_z_temp[1] ^ reg_z_temp[2] ^ reg_z_temp[4] ^ reg_z_temp[5] ^ reg_z_temp[6] ^ reg_z_temp[7]
+			# new_two = reg_z_temp[1] ^ reg_z_temp[6] ^ reg_z_temp[7]
 			reg_z_temp_two = copy.deepcopy(reg_z_temp)
 			m = 1
 			while(m < len(reg_z_temp)):
@@ -126,7 +139,7 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 
 	# exit(1)
     # FIXME my addition
-	keystream.insert(0, 0)
+	# keystream.insert(0, 0)
 	return keystream
 
 
@@ -150,7 +163,7 @@ def encrypt(plain): #takes in a plaintext, converts it to binary, gets the keyst
 	return s
 
 def decrypt(cipher): #takes in a cipher, gets the keystream from its length, cipher is XOR'd with keystream, and converted to string
-	# print('c', cipher)
+	print('c', cipher)
 	# exit(1)
 	s = ""
 	binary = []

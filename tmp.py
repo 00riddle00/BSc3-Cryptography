@@ -107,4 +107,88 @@ for bit8 in c_bits_tmp:
 print m_bits
 print c_bits
 
+m0 = sum(map(lambda x : 1 if '0' in x else 0, m_bits)) 
+m1 = sum(map(lambda x : 1 if '1' in x else 0, m_bits)) 
+print m0
+print m1
+
+c0 = sum(map(lambda x : 1 if '0' in x else 0, c_bits)) 
+c1 = sum(map(lambda x : 1 if '1' in x else 0, c_bits))
+print c0
+print c1
+
+tm1 = ((m1-m0)**2)/len(m_bits)
+print "tm1 ", tm1
+
+tc1 = ((c1-c0)**2)/len(c_bits)
+print "tc1 ", tc1
+
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=1
+T = RealDistribution('chisquared', m)
+#t=2.5
+pm1=1-T.cum_distribution_function(tm1)
+print "pm1 ", pm1
+
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=1
+T = RealDistribution('chisquared', m)
+#t=2.5
+pc1=1-T.cum_distribution_function(tc1)
+print "pc1 ", pc1
+
+m_pairs = {
+    '00':0,
+    '01':0,
+    '10':0,
+    '11':0,
+}
+
+c_pairs = {
+    '00':0,
+    '01':0,
+    '10':0,
+    '11':0,
+}
+
+#m_bits = b'010100'
+#print m_bits[0:2]
+#i = 0
+#m_pairs[m_bits[0:2]] += 1
+#m_pairs[m_bits[i:i+2]] += 1
+
+for i in range(len(m_bits)-1):
+    m_pairs[m_bits[i:i+2]] += 1
+    
+for i in range(len(c_bits)-1):
+    c_pairs[c_bits[i:i+2]] += 1
+
+print m_pairs
+print c_pairs
+
+# calc t2
+n = len(m_bits)
+tm2 = (4/(n-1)) * ( m_pairs['00']**2 + m_pairs['01']**2 + m_pairs['10']**2 + m_pairs['11']**2 ) - (2/n) * ( m0 ** 2 + m1 ** 2) + 1
+print "tm2 ", tm2
+
+n = len(c_bits)
+tc2 = (4/(n-1)) * ( c_pairs['00']**2 + c_pairs['01']**2 + c_pairs['10']**2 + c_pairs['11']**2 ) - (2/n) * ( c0 ** 2 + c1 ** 2) + 1
+print "tc2 ", tc2
+
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=2
+T = RealDistribution('chisquared', m)
+#t=2.5
+pm2=1-T.cum_distribution_function(tm2)
+print "pm2 ", pm2
+
+# Chi-kvadrat su m laisvės laipsnių p- reikšmė
+m=2
+T = RealDistribution('chisquared', m)
+#t=2.5
+pc2=1-T.cum_distribution_function(tc2)
+print "pc2 ", pc2
+
+
+
 

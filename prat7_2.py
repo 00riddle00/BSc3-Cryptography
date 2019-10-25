@@ -79,19 +79,10 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 	# print(reg_z_temp)
 	# print('k', keystream)
 
-	# 18,21,22 -> 7,7,7
-
-	# 8,10,10 -> 6,5,4
-
-	# 13,16,17,18 -> 0,1,2,3,5,6
-	# 20,21 -> 0,1,2,3,5,6
-	# 20,21,22 -> 0,1,2,3,5,6
-
 	ctrl_1 = 1
 	ctrl_2 = 2
 	ctrl_3 = 3
 
-	# length = 8
 	while i < length:
 		majority = get_majority(reg_x_temp[ctrl_1], reg_y_temp[ctrl_2], reg_z_temp[ctrl_3])
 		if reg_x_temp[ctrl_1] == majority: 
@@ -134,6 +125,7 @@ def get_keystream(length): #calculates the keystream by XOR-ing the appropriate 
 		# print('k', keystream)
 
 	# exit(1)
+    # FIXME my addition
 	keystream.insert(0, 0)
 	return keystream
 
@@ -228,7 +220,12 @@ def tha_main(): #the main function that processes user inputs
 		print(decrypt(ciphertext))			
 
 #Example of 64-bit key: 0101001000011010110001110001100100101001000000110111111010110111
+# Converted it to 24-bit key
+# Working example:
+# key = 011011110110111101101111 (init vector = [01101111])
+# cipher = 010000101001101001000001010011100111110100100011101011101000110100010101111000111110100000110011000110111001000111100100110100010000100101011111110001010101111001101101011001110000100000010001111000101111001100101000000101111000111111100100110010000000001001001111110100010101101001111000011000110001010000010001111111011111110100100000
 
 tha_main()
+
 
 

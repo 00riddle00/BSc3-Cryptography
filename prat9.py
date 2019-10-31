@@ -52,7 +52,12 @@ def hfOFB(h0,r,s): # h-funkcija OFB rezimas
 def getBin2(pair):
     return getBin(ord(pair[0]), 8) + getBin(ord(pair[1]), 8)
 
+title = '''
 # UZD1
+'''
+
+print title
+
 # zodis: 'uogapiktas'
 M1 = 'uo'
 M2 = 'ga'
@@ -112,3 +117,41 @@ print "h_M=", h_M
 print "h_M1=", h_M1
 
 assert(h_M == h_M1)
+
+title = '''
+# UZD2
+'''
+
+print title
+
+M1 = 'uo'
+M2 = 'ga'
+
+h0 = 'uo' # init vektorius
+r='pi' # kriptosistemos raktas
+
+h_M1 = decod(hfCBC(h0,r,M1))
+h_M1M2 = decod(hfCBC(h0,r,M1+M2))
+
+M2_bin = getBin2(M2)
+
+U = int(h_M1,2) ^^ int(h_M1M2,2) ^^ int(M2_bin,2)
+
+U = getBin(U, 16)
+
+u1 = chr(int(U[0:8],2))
+u2 = chr(int(U[8:16],2))
+
+print ord(u1), ord(u2)
+
+U = u1 + u2
+
+h_M1M2 = hfCBC(h0, r, M1+M2)
+h_M1M2U = hfCBC(h0, r, M1+M2+U)
+h_M1M2UU = hfCBC(h0, r, M1+M2+U+U)
+h_M1M2UUU = hfCBC(h0, r, M1+M2+U+U+U)
+
+print "h_M1M2=", h_M1M2
+print "h_M1M2U=", h_M1M2U
+print "h_M1M2UU=", h_M1M2UU
+print "h_M1M2UUU=", h_M1M2UUU

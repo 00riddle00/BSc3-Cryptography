@@ -65,13 +65,14 @@ M3 = 'pi'
 M4 = 'kt'
 M5 = 'as'
 
+N1 = 'to'
+N2 = 'mg'
+N3 = 'ie'
+
 h0 = 'uo' # init vektorius
 r='pi' # kriptosistemos raktas
-s=M1 # s yra pranesimas, kuri norime xorinti. Blokas is 2ju skaiciu arba 2 raidziu, ex. blokas 'ss' (2 baitai)
-h=hfCBC(h0,r,M1)
-#print h, decod(h) # h yra hashas, atitinka 2 bytes
-#print decod(h) # decod(h) gauname h bitukais (16bits)
-# decod - destytojo israiska decode, 16 raidziu abecele, 1 raide - 4 bitais
+h=hfCBC(h0,r,M1) # M1 yra pranesimas, kuri norime xorinti. Blokas is 2ju skaiciu arba 2 raidziu, ex. blokas 'ss' (2 baitai)
+#print h, decod(h) # h yra hashas, atitinka 2 bytes # decod(h) gauname h bitukais (16bits) # decod - destytojo israiska decode, 16 raidziu abecele, 1 raide - 4 bitais
 
 h_M1 = decod(h)
 M2_bin = getBin2(M2)
@@ -81,10 +82,6 @@ print "M2_bin=", M2_bin
 
 y = int(h_M1,2) ^^ int(M2_bin,2) # y = h_M1 ^^ M2
 print "y=", y
-
-N1 = 'to'
-N2 = 'mg'
-N3 = 'ie'
 
 h=hfCBC(h0,r,N1+N2) # veiktu ir su N1+N2+N3
 #print h, decod(h)
@@ -116,19 +113,15 @@ h_M1 = hfCBC(h0, r, N1+N2 + x1 + x2 + M3+M4+M5) # veiktu ir su N1+N2+N3
 print "h_M=", h_M
 print "h_M1=", h_M1
 
-assert(h_M == h_M1)
-
 title = '''
 # UZD2
 '''
 
 print title
 
+# zodis: 'uoga'
 M1 = 'uo'
 M2 = 'ga'
-
-h0 = 'uo' # init vektorius
-r='pi' # kriptosistemos raktas
 
 h_M1 = decod(hfCBC(h0,r,M1))
 h_M1M2 = decod(hfCBC(h0,r,M1+M2))
@@ -142,7 +135,10 @@ U = getBin(U, 16)
 u1 = chr(int(U[0:8],2))
 u2 = chr(int(U[8:16],2))
 
-print ord(u1), ord(u2)
+print "u1=", u1
+print "u2=", u2
+print "ord(u1)=", ord(u1)
+print "ord(u2)=", ord(u2)
 
 U = u1 + u2
 

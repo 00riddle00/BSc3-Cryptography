@@ -117,6 +117,7 @@ h_M1M2 = decod(hfOFB(h0, r, M1+M2))
 Y = int(h_M1M2,2)
 
 M = 'ab' # any
+print "M=",M
 h_M1M2M = decod(hfOFB(h0, r, M1+M2+M))
 
 M_bin = getBin2(M)
@@ -130,12 +131,12 @@ U = getBin(U, 16)
 u1 = chr(int(U[0:8],2))
 u2 = chr(int(U[8:16],2))
 
-U = u1 + u2
-
 print "u1=", u1
 print "u2=", u2
 print "ord(u1)=", ord(u1)
 print "ord(u2)=", ord(u2)
+
+U = u1 + u2
 
 h_M1M2 = hfOFB(h0, r, M1+M2)
 h_M1M2U = hfOFB(h0, r, M1+M2+U)

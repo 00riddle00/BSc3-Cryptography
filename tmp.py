@@ -65,31 +65,48 @@ W = [1715, 2048, 4204, 8375, 16744, 33539, 66999, 134078]
 t = 96706
 #t = 364541
 
-CR = [0,0,0,0,0,0,0,0]
 
-for i in range(8):
-    print i
+lg = len(C)
+
+CR = [0] * lg
+
+print "CR=", CR
+
+for i in range(lg):
+    #print i
     CR[i] = t * C[i] % p
     
 print "CR=", CR
 
-W1 = [0,0,0,0,0,0,0,0]
 
-CR1 = CR[0]
 
-#def get_WI():
-#    for i in range(
-#    tmp = CR1 - W[7]
-#    if tmp >= 0:
-#        CR1 = tmp
-        
- 
+
+def get_WI(CR):
+    WI = [0,0,0,0,0,0,0,0]
+    for i in range(7,-1,-1):
+        tmp = CR - W[i]
+        if tmp >= 0:
+            WI[i] = 1
+            CR = tmp
+    #print CR
+    return WI
+
+ATS = []
+
+for j in range(lg):
+    ats = get_WI(CR[j])
+    ats = ''.join([str(i) for i in ats])
+    print ats
+    ATS.append(ats)
+    
+ATS_integers = [int(i,2) for i in ATS]
+ATS = ''.join([chr(i) for i in ATS_integers])
+print "Tekstas=", ATS
+print "Priv.Raktas=", W
     
     
     
-    
-    
-    
+
     
     
     

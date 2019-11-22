@@ -69,11 +69,10 @@ for a in range(1,11):
             break
             
 q = n//p
-print q
 
 phi_n = (p-1)*(q-1)
 
-d_a = (1/e) % phi_n
+d_a = (1/e_a) % phi_n
 
 # Algio tekstas su RSA
 print i_teksta(power_mod(Ca_rsa,d_a,n))

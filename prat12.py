@@ -34,4 +34,4 @@ for i, ci in enumerate(C[:-1]):
     mi = ci^^pi
     res.append(chr(mi))
 
-print res
+print ''.join(res)

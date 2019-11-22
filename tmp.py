@@ -105,6 +105,22 @@ print C_2_mine
 T_2_mine = i_teksta(power_mod(C_2_mine,d_mine,n_mine))
 print T_2_mine
 
+m1 = power_mod(Ca_rab, (p+1)//4, p)
+m2 = power_mod(Ca_rab, (q+1)//4, q)
+
+u = (1/q) % p
+v = (1/p) % q
+
+ms = [(m1*u*q + m2*u*q*v*p) % n,
+      (m1*u*q - m2*u*q*v*p) % n,
+      (-m1*u*q + m2*u*q*v*p) % n,
+      (-m1*u*q - m2*u*q*v*p) % n]
+
+ms = map(lambda x: i_teksta(x), ms)
+
+print ms
+
+
 
 
      

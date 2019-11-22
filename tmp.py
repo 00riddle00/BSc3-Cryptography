@@ -51,7 +51,26 @@ t = e*d-1
 while (t % 2 == 0):
     t = t/2
 
+t = t*2
+
 print gcd(2,t)
+print("t=",t)
 
 
+
+for a in range(1,11):
+    print "a=", a
+    if (gcd(a,n) == 1):
+        a0 = power_mod(a,t,n)
+        print(a0)
+        break
+        ai, ai_prev = a0,a0
+        while (ai != 1):
+            ai_prev = ai
+            print(ai)
+            ai = power_mod(ai, 2, n)
+        p = gcd(ai_prev-1, n)
+        print p
+
+     
     

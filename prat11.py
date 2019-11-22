@@ -47,7 +47,8 @@ Ca_rab = 3378161399036048829048731846628034672714134203763663961355279590660397
 # TIKSLAS: Perskaitykite visus šifruotus laiškus
 
 # mano tekstas su RSA
-print i_teksta(power_mod(C_rsa,d,n))
+T_1 = i_teksta(power_mod(C_rsa,d,n))
+print T_1
 
 t = e*d-1
 while (t % 2 == 0):
@@ -73,9 +74,37 @@ q = n//p
 phi_n = (p-1)*(q-1)
 
 d_a = (1/e_a) % phi_n
+print d_a
 
 # Algio tekstas su RSA
-print i_teksta(power_mod(Ca_rsa,d_a,n))
+T_2 = i_teksta(power_mod(Ca_rsa,d_a,n))
+print T_2
+
+# Mano kriptosistema
+p_mine = random_prime(2^128-1,False,2^127)
+q_mine = random_prime(2^128-1,False,2^127)
+
+print "p_mine=", p_mine
+print "q_mine=", q_mine
+
+n_mine = p_mine * q_mine
+print "n_mine=", n_mine
+
+d_mine = random_prime(2^128-1,False,2^127)
+print "d_mine=", d_mine
+
+phi_n_mine = (p_mine-1)*(q_mine-1)
+
+e_mine = (1/d_mine) % phi_n_mine
+print "e_mine", e_mine
+
+# T_2 sifravimas su savo RSA (savo paraso sukurimas)
+C_2_mine = power_mod(i_skaiciu(T_2),e_mine,n_mine)
+print C_2_mine
+# C_2 desifravimas su savo RSA (savo paraso tikrinimas)
+T_2_mine = i_teksta(power_mod(C_2_mine,d_mine,n_mine))
+print T_2_mine
+
 
 
      

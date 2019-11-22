@@ -43,3 +43,15 @@ Ca_rsa = 2709568874488237512534696272580903807136898252036488204682740253059538
 Ca_rab = 3378161399036048829048731846628034672714134203763663961355279590660397
 
 # TIKSLAS: Perskaitykite visus šifruotus laiškus
+
+# mano tekstas
+print i_teksta(power_mod(C,d,n))
+
+t = e*d-1
+while (t % 2 == 0):
+    t = t/2
+
+print gcd(2,t)
+
+
+    

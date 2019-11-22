@@ -31,10 +31,12 @@ def i_teksta(M):
 [n,e,d]= [4612815926384476787239739621668907704717767309229707570311633835476393, 916304813609, 429357073462636237660670034578942775191310478273876821838370595349505]
 
 # Jums skirtas RSA laiškas
-C = 4193112016074571244795116993161685086752808927498748311171023074570004
+C_rsa = 4193112016074571244795116993161685086752808927498748311171023074570004
 
 # Algio RSA raktai 
 [n_a,e_a]=[4612815926384476787239739621668907704717767309229707570311633835476393, 420380077031]
+
+# n_a sutampa su n
 
 # Algiui skirtas RSA laiškas:
 Ca_rsa = 2709568874488237512534696272580903807136898252036488204682740253059538
@@ -44,33 +46,38 @@ Ca_rab = 3378161399036048829048731846628034672714134203763663961355279590660397
 
 # TIKSLAS: Perskaitykite visus šifruotus laiškus
 
-# mano tekstas
-print i_teksta(power_mod(C,d,n))
+# mano tekstas su RSA
+print i_teksta(power_mod(C_rsa,d,n))
 
 t = e*d-1
 while (t % 2 == 0):
-    t = t/2
-
-t = t*2
+    t = t//2 # du //, nes reikia ne tipo "Rational", o tipo "Integer"
 
 print gcd(2,t)
-print("t=",t)
-
-
 
 for a in range(1,11):
     print "a=", a
     if (gcd(a,n) == 1):
         a0 = power_mod(a,t,n)
-        print(a0)
-        break
         ai, ai_prev = a0,a0
         while (ai != 1):
             ai_prev = ai
-            print(ai)
             ai = power_mod(ai, 2, n)
         p = gcd(ai_prev-1, n)
-        print p
+        print ("p=",p)
+        if (p < n) and (p != 1):
+            break
+            
+q = n//p
+print q
+
+phi_n = (p-1)*(q-1)
+
+d_a = (1/e) % phi_n
+
+# Algio tekstas su RSA
+print i_teksta(power_mod(Ca_rsa,d_a,n))
+
 
      
     

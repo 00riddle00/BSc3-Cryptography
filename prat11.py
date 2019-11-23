@@ -133,11 +133,3 @@ print "Mano parasas T_3 zinutei:", C_3_mine
 T_3_mine = i_teksta(power_mod(C_3_mine,d_mine,n_mine))
 #print T_3_mine
 
-
-
-
-
-
-
-     
-    

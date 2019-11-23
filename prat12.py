@@ -19,9 +19,9 @@ u = power_mod(x, e, p)
 v = power_mod(x, d, q)
 
 s = (1/p) % q
-t2 = (1/q) % p
+r = (1/q) % p
 
-x0 = (u*(t2*q) + v*(s*p)) % n
+x0 = (u*(r*q) + v*(s*p)) % n
 
 res = []
 

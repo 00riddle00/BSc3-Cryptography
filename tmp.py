@@ -70,11 +70,34 @@ def get_ki(d):
     
     return ki
 
+def get_ai(d):
+    
+    a0 = (x1-delta1*k)*(1/gama) % (p-1)
+    ai = a0
+
+    if d == 1:
+          return a0
+    
+    while power_mod(alpha,ai,p)%p != beta
+        ai = a0 + (p-1)/d
+    
+    return ai
+
 k = get_ki(d)
 print k
+print 'ar k geras?', power_mod(alpha,k,p)%p == gama
 
-a = (x1-delta1*k)*(1/gama) % (p-1)
-print a
+d = gcd(gama,p-1)
+
+
+#a = (x1-delta1*k)*(1/gama) % (p-1)
+
+print 'ar a geras?', power_mod(alpha,a,p)%p == beta
+
+
+# Desifravimas
+#M=C_2/power_mod(C_1,a,p)%p
+#print i_teksta(M)
 
 
           

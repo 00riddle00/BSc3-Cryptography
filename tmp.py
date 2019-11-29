@@ -66,28 +66,31 @@ def get_ki(d):
           return k0
     
     while power_mod(alpha,ki,p)%p != gama:
-        ki = k0 + (p-1)/d
+        ki = k0 + (p-1)//d
     
     return ki
 
 def get_ai(d):
     
-    a0 = (x1-delta1*k)*(1/gama) % (p-1)
+    a0 = (x1-delta1*k)/gama % ((p-1)/d)
     ai = a0
 
     if d == 1:
           return a0
     
-    while power_mod(alpha,ai,p)%p != beta
-        ai = a0 + (p-1)/d
+    while power_mod(alpha,ai,p)%p != beta:
+        ai = a0 + (p-1)//d
     
     return ai
 
 k = get_ki(d)
-print k
 print 'ar k geras?', power_mod(alpha,k,p)%p == gama
 
 d = gcd(gama,p-1)
+
+a = get_ai(d)
+print("here")
+print a
 
 
 #a = (x1-delta1*k)*(1/gama) % (p-1)

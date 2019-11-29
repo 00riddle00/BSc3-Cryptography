@@ -51,9 +51,9 @@ gama = gama1
 
 #tikriname parasus
 #parasas1
-print(power_mod(beta,gama,p)*power_mod(gama,delta1,p)%p == power_mod(alpha,x1,p))
+print "Ar parasas1 teisingas?", power_mod(beta,gama,p)*power_mod(gama,delta1,p)%p == power_mod(alpha,x1,p)
 #parasas2
-print(power_mod(beta,gama,p)*power_mod(gama,delta2,p)%p == power_mod(alpha,x2,p) %p)
+print "Ar parasas2 teisingas?", power_mod(beta,gama,p)*power_mod(gama,delta2,p)%p == power_mod(alpha,x2,p)
 
 d=gcd(delta1-delta2,p-1)
 
@@ -84,24 +84,40 @@ def get_ai(d):
     return ai
 
 k = get_ki(d)
-print 'k=', k
-print 'ar k geras?', power_mod(alpha,k,p)%p == gama
+#print 'k=', k
+#print 'ar k geras?', power_mod(alpha,k,p)%p == gama
 
 d = gcd(gama,p-1)
 
 a = get_ai(d)
-print 'a=', a
-print 'ar a geras?', power_mod(alpha,a,p)%p == beta
+print 'Issifruotas a=', a
+#print 'ar a geras?', power_mod(alpha,a,p)%p == beta
 
 
 # Desifravimas
 M=C_2/power_mod(C_1,a,p)%p
-print i_teksta(M)
+print "issifruota zinute M=", i_teksta(M)
 
+# DSS sudarymas
+#print("\nDSS sudarymas\n")
+g=primitive_root(p) 
+# atkomentuoti
+#print factor(p-1) # pasirenkame kuo didesni 'q', bet darom tradeoff tarp paraso trumpumo ir saugumo
+q = 669824108147 # toki pasirinkau
+K_p=a # is Algio
+alpha=power_mod(alpha,(p-1//q),p)
+beta=power_mod(alpha,a,p)
+K_p=a
+K_v=[p,g,alpha,beta]
+print "Mano DSS Viesas raktas=", K_v
 
-          
-    
-    
-    
-    
-    
+k=1234567
+#print 'gerai parinktas k? ', gcd(k,p-1) == 1
+
+gama=power_mod(alpha,k,p)
+delta=(M-a*gama)/k % (p-1)
+
+print "Mano DSS pasirasyta Algio zinute=", [gama,delta]
+
+M=C_2/power_mod(C_1,a,p)%p
+#print "Patikrinimas: ", i_teksta(M) == "susitiksime?nakti"

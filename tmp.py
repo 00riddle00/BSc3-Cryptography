@@ -84,28 +84,34 @@ def get_ai(d):
     return ai
 
 k = get_ki(d)
+print 'k=', k
 print 'ar k geras?', power_mod(alpha,k,p)%p == gama
 
 d = gcd(gama,p-1)
 
 a = get_ai(d)
-print("here")
-print a
-
-
-#a = (x1-delta1*k)*(1/gama) % (p-1)
-
+print 'a=', a
 print 'ar a geras?', power_mod(alpha,a,p)%p == beta
 
 
 # Desifravimas
-#M=C_2/power_mod(C_1,a,p)%p
-#print i_teksta(M)
+M=C_2/power_mod(C_1,a,p)%p
+print "M=", i_teksta(M)
 
+# DSS sudarymas
+print("DSS sudarymas")
+g=primitive_root(p) 
+# atkomentuoti
+#print factor(p-1) # pasirenkame kuo didesni 'q', bet darom tradeoff tarp paraso trumpumo ir saugumo
+q = 669824108147 # toki pasirinkau
+K_p=a # is Algio
+alpha=power_mod(alpha,(p-1//q),p)
+beta=power_mod(alpha,a,p)
+K_p=a
+K_v=[p,g,alpha,beta]
+print "Viesas raktas=", K_v
 
-          
-    
-    
-    
-    
-    
+k=1234567
+print 'gerai parinktas k? ', gcd(k,p-1) == 1
+
+gama=

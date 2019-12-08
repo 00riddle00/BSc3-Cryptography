@@ -1,42 +1,52 @@
-# ESIGN digital signature
+# Gouillou-Quisquater digital signature
 
-from sage.functions.log import logb
-
-A='abcdefghijklmnopqrstuvwxyz0123456789'
-def hash(text,n):
+A = 'abcdefghijklmnopqrstuvwxyz0123456789'
+def hash(text, n):
     t=''
     for r in text:
         if r in A:
             ind=A.index(r)+1
-            if ind<10: t=t+'0'+str(ind)
+            if ind<10: t = t+'0'+str(ind)
             else: t=t+str(ind)
     return int(t,10)%n  
 
-k = 123456789
-x = hash("tomasgiedraitis", k)
+x = hash("tomasgiedraitis", 10000000000)
 
-p = next_prime(2^64) # pasirenkame
-q = next_prime(2^65) # pasirenkame
+a = next_prime(2^13) # pasirenkame
+p = next_prime(2^64)
+q = next_prime(2^72) # sikart pasirenkame savo nuoziura 
 
-v = x
-nEsign = p*p*q
+n = p*q
+phi_n = (p - 1)*(q - 1)
 
-r = next_prime(2^62)               # pasirenkame (mazesnis uz p)
+e = next_prime(2^17)
+print "gcd(e, phi_n)=", gcd(e, phi_n)
 
-print "Is r valid:", r < p
+I = x #7821411115
+print "gcd(I,n)=", gcd(n, I)
 
-w = ceil((((v - power_mod(r,k,nEsign)) % nEsign) / (p*q)))
-y = w / (k * power_mod(r,k-1,p)) % p
-s = (r + y*p*q) % nEsign
+d = 1/e % phi_n
+a = power_mod(I, -d, n)
+print 'is a valid:', I * a^e % n == 1
 
-K_pb = [nEsign, k]
+K_pr = a
+K_pb = [n, e, I]
 
-# Verification
-u = power_mod(s,k,nEsign)
-z = v
+k = next_prime(2^15)
+r = power_mod(k, e, n)
+# print 'r is ', r
+l = hash(str(x+r), 10000000000)
 
-print "verifying:", z <= u and u <= 2^ceil((2/3)*log(nEsign,2))
+s = k*power_mod(a, l, n) % n
 
-print 'x =', x                  # Pranesimas
-print "[n, k]=", K_pb           # Viesas raktas
-print "s=", s                   # Parasas
+u = power_mod(s,e,n) * power_mod(I,l,n) % n
+# print 'u is ', u
+
+ls = hash(str(x+u), 10000000000)
+print 'is ls == l:', ls == l
+
+Sig = [s, l]
+
+print 'x = ', x                   # Pranesimas
+print '[n, e, I] = ', K_pb        # Viesas raktas
+print '[s, l] = ', Sig            # Parasas

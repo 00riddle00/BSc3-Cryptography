@@ -12,8 +12,9 @@ def hash(text,n):
             else: t=t+str(ind)
     return int(t,10)%n  
 
+x = hash("tomasgiedraitis", 10000000000)
+
 k = 123456789
-x = hash("tomasgiedraitis", k)
 
 p = next_prime(2^64) # pasirenkame
 q = next_prime(2^65) # pasirenkame

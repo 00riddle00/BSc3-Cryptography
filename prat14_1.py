@@ -27,7 +27,6 @@ K_pr = a
 K_pb = [p, q, alpha, beta]
 
 k = next_prime(2^52)
-#k = 165616515645645612
 print 'gerai parinktas k? ', gcd(k,p-1) == 1
 
 gama  = power_mod(alpha, k, p)%q

@@ -45,6 +45,7 @@ s = k*power_mod(a, l, n) % n
 u = power_mod(s,e,n) * power_mod(I,l,n) % n
 # print 'u is ', u
 
+# if s := s+1, should not work!
 ls = hash(str(x+u), 10000000000)
 print 'is ls == l:', ls == l
 

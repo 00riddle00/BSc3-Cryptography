@@ -9,7 +9,7 @@
 #des: (63-27)*H999HH9aP97C1IaRWaGLP942q8 ->  riiirri zigmas 16 qvzidbPh
 #3. A->B: qvzidbPh
 #4. A<-B:  HM
-#des: (63-16)*JF -> 27
+#des: (63-16)*HM -> 27
 #sifr: 16*(27-1) -> HL
 #5. A->B: HL
 

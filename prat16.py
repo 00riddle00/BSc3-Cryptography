@@ -28,7 +28,7 @@ def vigen(key,text):
         ciph+=A[(A.index(textn[r])+rakt[r%d])%N]
     return ciph    
   
-vigen('raktas','tekstas') 
+print vigen('raktas','tekstas') 
 
 
 #Užduotyje rasite du ElGamalio šifrus grupei su slenksčiu t=5 ir savo rakto
@@ -46,9 +46,11 @@ vigen('raktas','tekstas')
 #Slenkstis
 t=5
 #Šifras
-C=[7333109914047830423403358580366739968864018572071237174, 12064032717206770507949740475689958147166901266014058908]
+C0=[7333109914047830423403358580366739968864018572071237174, 12064032717206770507949740475689958147166901266014058908]
 #Balų failo rakto šifras
 Cr=[8546284775834385955786936313017527364304510802731847173, 6854974634499061100353407038611108234835399974938772026]
+
+C = Cr
 
 z_1 = power_mod(C[0],y_1,p)
 
@@ -75,9 +77,20 @@ b5 = ( ( x_1*x_2*x_3*x_4 ) / ( (x_1-x_5)*(x_2-x_5)*(x_3-x_5)*(x_4-x_5) ) ) % q
 
       
 B = [b1,b2,b3,b4,b5]
-B
+
+z = 1
+
+for j in range(0,t):
+    z = z * power_mod(Z[j],B[j],p) % p
+    
+z
+
+M = C[1] / z % p
+print "mano atsakymas=",to_text(M)
 
 
+#1,2,3,4 n=17
 
+#des raktas= -1%17, -2%17, ...
 
 

@@ -2,8 +2,8 @@
 
 from copy import deepcopy
 
-abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
-abcd=unicode('AaĄąBbCcČčDdEeĘęĖėFfGgHhIiĮįYyJjKkLlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž','utf-8')
+abc='AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ'
+abcd='AaĄąBbCcČčDdEeĘęĖėFfGgHhIiĮįYyJjKkLlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž'
 n = len(abc)
 K = [[25,14],[6,29]]
 
@@ -50,7 +50,7 @@ def clean_text(text):
 def Ceasar(alphabet,text,l1,l2):
     n = len(alphabet)
     text = clean_text(text)
-    res=unicode('','utf-8')
+    res=''
     for c in text:
         m=(l1*alphabet.index(c)+l2)%n
         res+=alphabet[m]
@@ -69,9 +69,8 @@ def bf_Ceasar_2():
         for l2 in range(32):
             print("l1={}  | l2={}".format(l1,l2))
             print(Ceasar(abc,sifr3, l1, l2))
-
-
-
+            
+            
 def det(M):
     return M[0][0] * M[1][1] - M[0][1] * M[1][0]
 
@@ -109,12 +108,12 @@ def Hill(text,K):
     for c in text:
         cc.append(abc.index(c))
 
-    res=unicode('','utf-8')
+    res=''
 
     i = 0
-    while i < len(text):
+    K_inv = inverse(K)
 
-        K_inv = inverse(K)
+    while i < len(text):
         c_vector = [ cc[i], cc[i+1] ]
 
         m_vector = mod_of_vector(vector_x_matrix( c_vector, K_inv ), n)
@@ -123,18 +122,24 @@ def Hill(text,K):
         i+=2
 
     return res
-    
-# uzduotis_1
-#print Ceasar(abcd, sifr1, 25, 48)
 
-# uzduotis_2
+# task_1
+#print(Ceasar(abcd, sifr1, 25, 48))
+
+# task_2
+# ans. starts with "Buvo"
 #bf_Ceasar_1()
 
-# uzduotis_3
-# ats. prasideda "STŪKSO"
+# task_3
+# ans. starts with "STŪKSO"
 #bf_Ceasar_2()
 
-# uzduotis_4
-print(Hill(sifr4, K))
+# task_4
+#import time
 
+#start = time.time()
 
+#print(Hill(sifr4, K))
+
+#end = time.time()
+#print("{0:.3f}ms".format((end-start)*1000))

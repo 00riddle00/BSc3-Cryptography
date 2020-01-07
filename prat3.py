@@ -1,9 +1,9 @@
 import string
 from collections import defaultdict
 
-abc=unicode('AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ','utf-8')
+abc='AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ'
 abcu='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-test=unicode('AEIO','utf-8')
+test='AEIO'
 
 length=len(abc)
 
@@ -177,7 +177,7 @@ def freq2(text):
 
 # Friedmano testas
 def friedm(text,k):
-    textn=unicode("",'utf-8')
+    textn=""
     for r in text:
         if r in abc:
             textn+=r
@@ -198,15 +198,15 @@ def split(text,d):
 
 # Raktui spėti
 # def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas šifro raktas
-#     tst=unicode('','utf-8')
+#     tst=''
 #     for r in test:
 #         if r in abc:
 #             tst+=r    
-#     tstk=unicode('','utf-8')
+#     tstk=''
 #     for r in tst:
 #         tstk+=abc[(abc.index(r)+k)%length]
 #     d = defaultdict(int)
-#     sifrn=unicode('','utf-8')
+#     sifrn=''
 #     for r in sifr:
 #         if r in abc: sifrn+=r
 #     for r in sifrn:
@@ -227,16 +227,16 @@ def guess2(test, c_x): #test - dažniausių raidžių eilutė, c_x -> pvz c1 = '
         dazniai = freq2(c_x)
         for char in test_list:
             counts += dazniai[char]
-        print(u"i={}, raktas={}, dazniai={}, raides={}".format(i, abc[i], counts, ''.join(map(unicode, test_list))))
+        print(u"i={}, raktas={}, dazniai={}, raides={}".format(i, abc[i], counts, ''.join(map(str, test_list))))
 
 # PVZ
-#print Vigenere(u'KALNAS', u'ŽEMĖ')
+#print (Vigenere(u'KALNAS', u'ŽEMĖ'))
 
 # UZD1
-#print Vigenere(sifr1,sifr_to_desifr(sifr1_raktas))
+#print (Vigenere(sifr1,sifr_to_desifr(sifr1_raktas)))
 
 # UZD2
-#print Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis))))
+#print (Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis)))))
 
 # UZD3
 sifr3 = clean_text(sifr3)
@@ -259,7 +259,7 @@ ilgis = 7
 
 c_x = []
 for i in range(0,ilgis):
-    x = ''.join(map(unicode, split(sifr3[i:],ilgis)[0]))
+    x = ''.join(map(str, split(sifr3[i:],ilgis)[0]))
     c_x.append(x)
 
 for i in range(0, ilgis):
@@ -271,8 +271,7 @@ print(Vigenere(sifr3,sifr_to_desifr(u'STIPRUS')))
 
 
 # UZD4
-#print auto_vigenere(sifr4, sifr4_raktas)
-
+#print (auto_vigenere(sifr4, sifr4_raktas))
 
 
 

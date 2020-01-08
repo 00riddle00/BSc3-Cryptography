@@ -120,14 +120,6 @@ def sifr_to_desifr(sifr_raktas):
         desifr_raktas += abc[new_ind]
     return desifr_raktas
 
-def friedmann_test(sifr_rakto_dalis):
-    if sifr_rakto_dalis == u'GAN':
-        # do some googling:
-        # https://cryptii.com/pipes/vigenere-cipher
-        # http://www.lkz.lt
-        sifro_raktas = u'GANDRAS'
-    return sifro_raktas
-
 def Vigenere(text,key): #Vigenere cipher
     text = clean_text(text)
     abc_len=len(abc)
@@ -155,17 +147,6 @@ def auto_vigenere(text, key):
         fin_res +=res
     return fin_res
 
-# Dažniai
-#def freq(text):
-#    d = defaultdict(int)
-#    s=""
-#    for w in text:
-#        if w in abc:
-#            d[w] += 1                   
-#    for w in sorted(d, key=d.get, reverse=True):
-#        s+=w
-#    return s
-
 # Dažniai (mano f-ja)
 def freq2(text):
     d = defaultdict(int)
@@ -177,14 +158,10 @@ def freq2(text):
 
 # Friedmano testas
 def friedm(text,k):
-    textn=""
-    for r in text:
-        if r in abc:
-            textn+=r
-    l=len(textn)
+    l=len(text)
     s=0
     for i in range(k,l):
-        if textn[i]==textn[i-k] :
+        if text[i]==text[i-k] :
             s+=1
     return  1.*s/(l-k)  
 
@@ -196,27 +173,8 @@ def split(text,d):
         tspl[i%d]+=text[i]
     return tspl   
 
-# Raktui spėti
-# def guess(test, k, sifr): #test - dažniausių raidžių eilutė, k - spėjamas šifro raktas
-#     tst=''
-#     for r in test:
-#         if r in abc:
-#             tst+=r    
-#     tstk=''
-#     for r in tst:
-#         tstk+=abc[(abc.index(r)+k)%length]
-#     d = defaultdict(int)
-#     sifrn=''
-#     for r in sifr:
-#         if r in abc: sifrn+=r
-#     for r in sifrn:
-#         if r in tstk: d[r]+=1
-#     kiek=len(sifrn)
-#     s=0
-#     for a in d.keys(): s+=d[a]
-#     return s/kiek
-
 # Raktui spėti (mano f-ja)
+# spausdina, kokia suma tekste testiniu raidziu, pvz. 'AEIO'
 def guess2(test, c_x): #test - dažniausių raidžių eilutė, c_x -> pvz c1 = 'ABCD' -> perrikiuotas tekstas pagal rakto ilgi
     for i in range(0, length):
         if i == 0:
@@ -230,23 +188,53 @@ def guess2(test, c_x): #test - dažniausių raidžių eilutė, c_x -> pvz c1 = '
         print(u"i={}, raktas={}, dazniai={}, raides={}".format(i, abc[i], counts, ''.join(map(str, test_list))))
 
 # PVZ
-#print (Vigenere(u'KALNAS', u'ŽEMĖ'))
+# print (Vigenere(u'KALNAS', u'ŽEMĖ'))
 
 # UZD1
-#print (Vigenere(sifr1,sifr_to_desifr(sifr1_raktas)))
+# print (Vigenere(sifr1,sifr_to_desifr(sifr1_raktas)))
 
 # UZD2
-#print (Vigenere(sifr2,sifr_to_desifr((friedmann_test(sifr2_rakto_dalis)))))
 
-# UZD3
-sifr3 = clean_text(sifr3)
+# ============= cool way =============
+
+# start = 'GAN'
+# do some googling:
+# https://cryptii.com/pipes/vigenere-cipher
+# http://www.lkz.lt
+# key = 'GANDRAS'
+# print (Vigenere(sifr2,sifr_to_desifr(('GANDRAS'))))
+
+# ============= lame way =============
+
+#sifr2 = clean_text(sifr2)
 
 # ieskome rakto ilgio
-for i in range(1,20):
-    print("i={}, friedm={}".format(i, friedm(sifr3,i)))
+#for i in range(1,20):
+#    print("i={}, friedm={}".format(i, friedm(sifr2,i)))
+
+# radome, ilgis yra 7
+#ilgis = 7
+
+# padaliname sifra i 7 dalis, perrikiuodami pagal rakto ilgi
+#c_x = split(sifr2,ilgis)
+
+#for i in range(0, ilgis):
+#    print("spejame C{}".format(i+1))
+#    guess2(test, c_x[i])
+
+# pagal daznius ir intuicija nustateme, kad raktas yra 'GANDRAS'
+#print (Vigenere(sifr2,sifr_to_desifr(('GANDRAS'))))
+
+
+# UZD3
+#sifr3 = clean_text(sifr3)
+
+# ieskome rakto ilgio
+#for i in range(1,20):
+#    print("i={}, friedm={}".format(i, friedm(sifr3,i)))
     
 # radome, ilgis yra 7
-ilgis = 7
+# ilgis = 7
 
 # padaliname sifra i 7 dalis, perrikiuodami pagal rakto ilgi
 #c1='FVY...
@@ -256,22 +244,17 @@ ilgis = 7
 #c5='IFĘ...
 #c6='ŽOE...
 #c7='HHS...
+# c_x = split(sifr3,ilgis)
 
-c_x = []
-for i in range(0,ilgis):
-    x = ''.join(map(str, split(sifr3[i:],ilgis)[0]))
-    c_x.append(x)
+#for i in range(0, ilgis):
+#    print("spejame C{}".format(i+1))
+#    guess2(test, c_x[i])
 
-for i in range(0, ilgis):
-    print("spejame C{}".format(i+1))
-    guess2(test, c_x[i])
-
-# pagal daznius ir intuicija mazdaug nustateme, kad raktas yra 'STIPRUS'
-print(Vigenere(sifr3,sifr_to_desifr(u'STIPRUS')))
+# pagal daznius nustateme, kad raktas yra 'STIPRUS'
+# print(Vigenere(sifr3,sifr_to_desifr(u'STIPRUS')))
 
 
 # UZD4
 #print (auto_vigenere(sifr4, sifr4_raktas))
-
 
 

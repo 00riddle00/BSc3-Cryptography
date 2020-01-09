@@ -1,16 +1,14 @@
-import string
 from collections import defaultdict
 
-abc='AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ'
-abcu='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-test='AEIO'
+abc = 'AĄBCČDEĘĖFGHIĮYJKLMNOPRSŠTUŲŪVZŽ'
+abcu = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+test_letters = 'AEIO'
 
-length=len(abc)
+length = len(abc)
 
+cypher1_key = u'STOGAS'
 
-sifr1_raktas = u'STOGAS'
-  
-sifr1 = u'''
+cypher1 = u'''
 KTŠRA LETYŽ OĘVGA ZLCĘĮ HŪEKM 
 YOGIJ ĘĄCZK SŪYDG NVKĮH ZRTCM 
 OVEĮH ZĖTOĘ CODGU ĘCTED PVĮHO 
@@ -25,9 +23,9 @@ KSŪKĖ ŲISĮD ĖZRTC MOVEI SKĮZV
 C
 '''
 
-sifr2_rakto_dalis = u'GAN'
+cypher2_key_part = u'GAN'
 
-sifr2 = u'''
+cypher2 = u'''
 ĄOČLR RCĄBĮ BGAKA AGZRS ĘZNTV 
 BMKGS DHJŲI AITVĖ AGČŽV LĖSKG 
 NIUĘA GKTNŪ KKSĄI NUĘIG UDKLĮ 
@@ -45,7 +43,7 @@ NĘAGY IYĘŪS CĄUCD FTŪĘI TSĮAL
 ŲĖDDH LCVKK LŪNSU IIE
 '''
 
-sifr3 = u'''
+cypher3 = u'''
 FĮLPI ŽHVFB PFOHY ŽCFĘE SĮDCČ 
 ROKCF BĄROY CTŠSK LYLHI OZFZY 
 GŠŽBG CTDBD YNCVK LCŲTC HDBĖB 
@@ -89,9 +87,9 @@ FĄĖPĘ DGIĖU EMTŽC ĄĮOĘS IDUNE
 VFKIJ ĘBFSY VĄFGO CŽŽPE EKŠ  
 '''
 
-sifr4_raktas = u'KLEVAS'
+cypher4_key = u'KLEVAS'
 
-sifr4=u'''
+cypher4 = u'''
 ĘDSFA ĮNŪTC VĄNPJ COUNI ŽSĘAH 
 ŠLKĘS VZGHŪ ĮFČBV ŪACCI FYSŪC 
 ŽBCĖŪ RDŲCŽ REDMJ ŽHSLD ŽČĖCĖ 
@@ -109,152 +107,156 @@ HGDFŲ JEIHA ĘEAŪH NAHVĖ LDSHS
 TTSSA ĖDIĘO IYŠIS ADJ
 '''
 
+
 def clean_text(text):
     return text.replace('\n', ' ').replace('\r', '').replace(' ', '')
 
-def sifr_to_desifr(sifr_raktas):
-    desifr_raktas = u''
-    for let in sifr_raktas:
+
+def cypher_to_decipher(cypher_key):
+    decipher_key = u''
+    for let in cypher_key:
         ind = abc.index(let)
         new_ind = (-1 * ind) % length
-        desifr_raktas += abc[new_ind]
-    return desifr_raktas
+        decipher_key += abc[new_ind]
+    return decipher_key
 
-def Vigenere(text,key): #Vigenere cipher
+
+# ex. vigenere(u'KALNAS', u'ŽEMĖ')
+def vigenere(text, key):  # vigenere cipher
     text = clean_text(text)
-    abc_len=len(abc)
-    textc=u''
-    keys=[]
-    lk=len(key)
-    for i in range(0,lk):
+    abc_len = len(abc)
+    textc = u''
+    keys = []
+    lk = len(key)
+    for i in range(0, lk):
         keys.append(abc.index(key[i]))
-    lt=len(text)
-    for i in range(0,lt):
-        textc+=abc[(abc.index(text[i])+keys[i%lk])%length]
+    lt = len(text)
+    for i in range(0, lt):
+        textc += abc[(abc.index(text[i]) + keys[i % lk]) % length]
     return textc
+
 
 def auto_vigenere(text, key):
     text = clean_text(text)
     fin_res = u''
-    ilgis = len(key)
-    viso_text_ilgis = len(text)
-    teksto_dalis = u''
-    for i in range(ilgis,viso_text_ilgis,ilgis):
-        teksto_dalis = text[i-ilgis:i]
-        desifr_key = sifr_to_desifr(key)
-        res = Vigenere(teksto_dalis, desifr_key)
-        key = teksto_dalis
-        fin_res +=res
+    lg = len(key)
+    whole_text_len = len(text)
+    text_part = u''
+    for i in range(lg, whole_text_len, lg):
+        text_part = text[i - lg:i]
+        decipher_key = cypher_to_decipher(key)
+        res = vigenere(text_part, decipher_key)
+        key = text_part
+        fin_res += res
     return fin_res
 
-# Dažniai (mano f-ja)
-def freq2(text):
+
+# Frequencies
+def freq(text):
     d = defaultdict(int)
-    s=""
+    s = ""
     for w in text:
         if w in abc:
             d[w] += 1
     return d
 
-# Friedmano testas
-def friedm(text,k):
-    l=len(text)
-    s=0
-    for i in range(k,l):
-        if text[i]==text[i-k] :
-            s+=1
-    return  1.*s/(l-k)  
 
-# Skaidymas
-def split(text,d):
-    tspl=['']*d
-    n=len(text)
-    for i in range(0,n):
-        tspl[i%d]+=text[i]
-    return tspl   
+# Friedman test
+def friedm(text, k):
+    l = len(text)
+    s = 0
+    for i in range(k, l):
+        if text[i] == text[i - k]:
+            s += 1
+    return 1. * s / (l - k)
 
-# Raktui spėti (mano f-ja)
-# spausdina, kokia suma tekste testiniu raidziu, pvz. 'AEIO'
-def guess2(test, c_x): #test - dažniausių raidžių eilutė, c_x -> pvz c1 = 'ABCD' -> perrikiuotas tekstas pagal rakto ilgi
+
+# Splitting Vigenere into Caesar cyphers
+def split(text, d):
+    tspl = [''] * d
+    n = len(text)
+    for i in range(0, n):
+        tspl[i % d] += text[i]
+    return tspl
+
+
+# For guessing the key
+# prints the sum of test letters (ex. 'AEIO') in a text
+# ::params:: test - test letters (most frequent letters)
+# ::params:: c_x - Caesar cypher, made according to the Vigenere key length
+def guess(test, c_x):
     for i in range(0, length):
         if i == 0:
             test_list = [char for char in test]
         else:
-            test_list = [abc[  (abc.index(char) + 1) % length ] for char in test_list]  
+            test_list = [abc[(abc.index(char) + 1) % length] for char in test_list]
         counts = 0
-        dazniai = freq2(c_x)
+        freqs = freq(c_x)
         for char in test_list:
-            counts += dazniai[char]
-        print(u"i={}, raktas={}, dazniai={}, raides={}".format(i, abc[i], counts, ''.join(map(str, test_list))))
+            counts += freqs[char]
+        print(u"i={}, key={}, freqs={}, letters={}".format(i, abc[i], counts, ''.join(map(str, test_list))))
 
-# PVZ
-# print (Vigenere(u'KALNAS', u'ŽEMĖ'))
 
-# UZD1
-# print (Vigenere(sifr1,sifr_to_desifr(sifr1_raktas)))
+# T1
+print(vigenere(cypher1, cypher_to_decipher(cypher1_key)))
 
-# UZD2
-
+# T2
 # ============= cool way =============
 
-# start = 'GAN'
+# key_start = 'GAN'
 # do some googling:
 # https://cryptii.com/pipes/vigenere-cipher
 # http://www.lkz.lt
-# key = 'GANDRAS'
-# print (Vigenere(sifr2,sifr_to_desifr(('GANDRAS'))))
+cypher2_key = 'GANDRAS'
+print(vigenere(cypher2, cypher_to_decipher('GANDRAS')))
 
 # ============= lame way =============
 
-#sifr2 = clean_text(sifr2)
+cypher2 = clean_text(cypher2)
 
-# ieskome rakto ilgio
-#for i in range(1,20):
-#    print("i={}, friedm={}".format(i, friedm(sifr2,i)))
+# searching for key length
+for i in range(1, 20):
+    print("i={}, friedm={}".format(i, friedm(cypher2, i)))
 
-# radome, ilgis yra 7
-#ilgis = 7
+# found the key length
+key_len = 7
 
-# padaliname sifra i 7 dalis, perrikiuodami pagal rakto ilgi
-#c_x = split(sifr2,ilgis)
+# split cypher in 7 parts (Caesar cyphers) by key length
+c_x = split(cypher2, key_len)
 
-#for i in range(0, ilgis):
-#    print("spejame C{}".format(i+1))
-#    guess2(test, c_x[i])
+for i in range(0, key_len):
+    print("guessing C{}".format(i + 1))
+    guess(test_letters, c_x[i])
 
-# pagal daznius ir intuicija nustateme, kad raktas yra 'GANDRAS'
-#print (Vigenere(sifr2,sifr_to_desifr(('GANDRAS'))))
+# according to frequencies and intuition we deduce that the key is 'GANDRAS'
+print(vigenere(cypher2, cypher_to_decipher('GANDRAS')))
 
+# T3
+cypher3 = clean_text(cypher3)
 
-# UZD3
-#sifr3 = clean_text(sifr3)
+# searching for key length
+for i in range(1, 20):
+    print("i={}, friedm={}".format(i, friedm(cypher3, i)))
 
-# ieskome rakto ilgio
-#for i in range(1,20):
-#    print("i={}, friedm={}".format(i, friedm(sifr3,i)))
-    
-# radome, ilgis yra 7
-# ilgis = 7
+# found the key length
+key_len = 7
 
-# padaliname sifra i 7 dalis, perrikiuodami pagal rakto ilgi
-#c1='FVY...
-#c2='ĮFŽ...
-#c3='LBC...
-#c4='PPF...
-#c5='IFĘ...
-#c6='ŽOE...
-#c7='HHS...
-# c_x = split(sifr3,ilgis)
+# split cypher in 7 parts (Caesar cyphers) by key length
+# c1='FVY...
+# c2='ĮFŽ...
+# c3='LBC...
+# c4='PPF...
+# c5='IFĘ...
+# c6='ŽOE...
+# c7='HHS...
+c_x = split(cypher3, key_len)
 
-#for i in range(0, ilgis):
-#    print("spejame C{}".format(i+1))
-#    guess2(test, c_x[i])
+for i in range(0, key_len):
+    print("guessing C{}".format(i + 1))
+    guess(test_letters, c_x[i])
 
-# pagal daznius nustateme, kad raktas yra 'STIPRUS'
-# print(Vigenere(sifr3,sifr_to_desifr(u'STIPRUS')))
+# according to frequencies we deduce easily that the key is 'STIPRUS'
+print(vigenere(cypher3, cypher_to_decipher('STIPRUS')))
 
-
-# UZD4
-#print (auto_vigenere(sifr4, sifr4_raktas))
-
-
+# T4
+print(auto_vigenere(cypher4, cypher4_key))

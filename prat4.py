@@ -1,5 +1,4 @@
-
-abc='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 lg = len(abc)
 
 s1 = '''
@@ -63,132 +62,132 @@ JNUTG VOZIK NQGHZ JOOLF CHRYJ
 IMU
 '''
 
+
 def clean_text(text):
     return text.replace('\n', ' ').replace('\r', '').replace(' ', '')
 
-def deenigma(text, k1, k2, L1, L2):
+
+def deenigma(text, k1, k2, l1, l2):
     res = []
-    
+
     text = clean_text(text)
     lt = len(text)
 
-    mapL1 = dict()
+    map_l1 = dict()
 
-    # sudarome atvirkstini keitini
+    # create inverse substitute
     for i in range(0, lg):
-        mapL1[L1[i]] = i
+        map_l1[l1[i]] = i
 
-    mapL2 = dict()
+    map_l2 = dict()
 
-    # sudarome atvirkstini keitini
+    # create inverse substitute
     for i in range(0, lg):
-        mapL2[L2[i]] = i
+        map_l2[l2[i]] = i
 
-    # rotoriai
+    # rotors
     for i in range(0, lt):
         k = i
-        m1 = k%26
-        m2 = ((k-m1)//26) % 26
-        
-        m1 = m1+k1
-        m2 = m2+k2
-        
+        m1 = k % 26
+        m2 = ((k - m1) // 26) % 26
+
+        m1 = m1 + k1
+        m2 = m2 + k2
+
         a = abc.index(text[i])
-        
-        a = (a+m2) % lg
-        a = mapL2[a]
-        a = (a-m2) % lg
-        a = (a+m1) % lg
-        a = mapL1[a]
-        a = (a-m1) % lg
+
+        a = (a + m2) % lg
+        a = map_l2[a]
+        a = (a - m2) % lg
+        a = (a + m1) % lg
+        a = map_l1[a]
+        a = (a - m1) % lg
         res.append(a)
 
     for i in range(0, lt):
         res[i] = abc[res[i]]
-        
+
     return ''.join(res)
 
-    
-def enigma(text, k1, k2, L1, L2):
+
+def enigma(text, k1, k2, l1, l2):
     res = []
-    
+
     text = clean_text(text)
     lt = len(text)
 
-    mapL1 = dict()
+    map_l1 = dict()
 
-    # sudarome keitini
+    # create substitute
     for i in range(0, lg):
-        mapL1[i] = L1[i]
+        map_l1[i] = l1[i]
 
-    mapL2 = dict()
+    map_l2 = dict()
 
-    # sudarome keitini
+    # create substitute
     for i in range(0, lg):
-        mapL2[i] = L2[i]
+        map_l2[i] = l2[i]
 
-    # rotoriai
+    # rotors
     for i in range(0, lt):
         k = i
-        m1 = k%26
-        m2 = ((k-m1)//26) % 26
-        
-        m1 = m1+k1
-        m2 = m2+k2
-        
+        m1 = k % 26
+        m2 = ((k - m1) // 26) % 26
+
+        m1 = m1 + k1
+        m2 = m2 + k2
+
         a = abc.index(text[i])
-        
-        a = (a+m1) % lg
-        a = mapL1[a]
-        a = (a-m1) % lg
-        a = (a+m2) % lg
-        a = mapL2[a]
-        a = (a-m2) % lg
-        
+
+        a = (a + m1) % lg
+        a = map_l1[a]
+        a = (a - m1) % lg
+        a = (a + m2) % lg
+        a = map_l2[a]
+        a = (a - m2) % lg
+
         res.append(a)
 
     return res
 
 
-# uzd1
-k1,k2 = 1,2
+# T1
+k1, k2 = 1, 2
 
-L1=[10, 2, 21, 18, 23, 6, 16, 14, 8, 11, 1, 25, 15, 20, 0, 24, 17, 19, 22, 5, 4, 3, 9, 12, 13, 7]
-L2=[10, 2, 11, 18, 8, 20, 19, 25, 23, 1, 15, 9, 14, 6, 24, 0, 17, 7, 22, 21, 4, 12, 5, 3, 16, 13]
+l1 = [10, 2, 21, 18, 23, 6, 16, 14, 8, 11, 1, 25, 15, 20, 0, 24, 17, 19, 22, 5, 4, 3, 9, 12, 13, 7]
+l2 = [10, 2, 11, 18, 8, 20, 19, 25, 23, 1, 15, 9, 14, 6, 24, 0, 17, 7, 22, 21, 4, 12, 5, 3, 16, 13]
 
-#print deenigma(s1, k1, k2, L1, L2)
+print(deenigma(s1, k1, k2, l1, l2))
 
-
-# uzd2
+# T2
 k1 = 15
-k2 = -1 # nezinome
+k2 = -1  # is not known
 
-L1=[20, 3, 24, 18, 8, 5, 15, 4, 7, 11, 0, 13, 9, 22, 12, 23, 10, 1, 19, 21, 17, 16, 2, 25, 6, 14]
-L2=[8, 13, 24, 18, 9, 0, 7, 14, 10, 11, 19, 25, 4, 17, 12, 21, 15, 3, 22, 2, 20, 16, 23, 1, 6, 5]
+l1 = [20, 3, 24, 18, 8, 5, 15, 4, 7, 11, 0, 13, 9, 22, 12, 23, 10, 1, 19, 21, 17, 16, 2, 25, 6, 14]
+l2 = [8, 13, 24, 18, 9, 0, 7, 14, 10, 11, 19, 25, 4, 17, 12, 21, 15, 3, 22, 2, 20, 16, 23, 1, 6, 5]
 
-#for i in range(0,lg):
-#    k2 = i
-#    res = deenigma(s2, k1, k2, L1, L2)
-#    if res[0] == 'S':
-#        print res
+for i in range(0, lg):
+    k2 = i
+    res = deenigma(s2, k1, k2, l1, l2)
+    if res[0] == 'S':
+        print(res)
 
+# T3
 
-# uzd3
+# Enigma cyper's (with reflection) key=[25,18]
+k1, k2 = 25, 18
 
-#Enigma  šifro (su atspindžiu) raktas=[25, 18]
-k1,k2 = 25, 18
+l1 = [20, 3, 24, 18, 8, 5, 15, 4, 7, 11, 0, 13, 9, 22, 12, 23, 10, 1, 19, 21, 17, 16, 2, 25, 6, 14]
+l2 = [8, 13, 24, 18, 9, 0, 7, 14, 10, 11, 19, 25, 4, 17, 12, 21, 15, 3, 22, 2, 20, 16, 23, 1, 6, 5]
 
-L1=[20, 3, 24, 18, 8, 5, 15, 4, 7, 11, 0, 13, 9, 22, 12, 23, 10, 1, 19, 21, 17, 16, 2, 25, 6, 14]
-L2=[8, 13, 24, 18, 9, 0, 7, 14, 10, 11, 19, 25, 4, 17, 12, 21, 15, 3, 22, 2, 20, 16, 23, 1, 6, 5]
+# Reflection's substitute
+s = [2, 4, 0, 6, 1, 11, 3, 8, 7, 13, 16, 5, 15, 9, 18, 12, 10, 19, 14, 17, 25, 22, 21, 24, 23, 20]
 
-#Atspindžio keitinys
-s=[2, 4, 0, 6, 1, 11, 3, 8, 7, 13, 16, 5, 15, 9, 18, 12, 10, 19, 14, 17, 25, 22, 21, 24, 23, 20]
+tmp = enigma(s3, k1, k2, l1, l2)
 
-#tmp = enigma(s3, k1, k2, L1, L2)
+for i in range(0, len(tmp)):
+    tmp[i] = abc[s[tmp[i]]]
 
-#for i in range(0, len(tmp)):
-#    tmp[i] = abc[s[tmp[i]]]
+tmp_text = ''.join(tmp)
 
-#tmp_text = ''.join(tmp)
-
-#print deenigma(tmp_text, k1, k2, L1, L2)
+print(deenigma(tmp_text, k1, k2, l1, l2))

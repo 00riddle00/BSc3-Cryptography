@@ -123,18 +123,18 @@ def Hill(text,K):
 
     return res
 
-# task_1
+# T1
 #print(Ceasar(abcd, sifr1, 25, 48))
 
-# task_2
+# T2
 # ans. starts with "Buvo"
 #bf_Ceasar_1()
 
-# task_3
+# T3
 # ans. starts with "STŪKSO"
 #bf_Ceasar_2()
 
-# task_4
+# T4
 #import time
 
 #start = time.time()
